@@ -1,8 +1,9 @@
 import { useRouter } from 'next/router';
-import { Dispatch, SetStateAction, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import Spinner from '../components/Loading/Loader';
 import Header from '../components/Header/Header';
-import { tokenKey } from '../Utils/tokens';
+import { saveToken } from '../Utils/tokens';
+import { validateAndRefreshToken } from '../Services/Auth';
 
 interface Props {
   children: JSX.Element;
@@ -12,34 +13,20 @@ const PrivateRoute: React.FC<Props> = ({ children }) => {
   const [user, setUser] = useState('');
   const [isLoading, setIsLoading] = useState(true); //muda para true dps
   const router = useRouter();
-  const handleComplete = () => {
-    console.log(localStorage.getItem(tokenKey));
-    const data = fetch(
-      `${process.env.NEXT_PUBLIC_API_ROUTE}/auth/admin-refresh`,
-      {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: 'Bearer ' + localStorage.getItem(tokenKey),
-        },
-        body: JSON.stringify({
-          name: 'John Doe',
-          email: 'john.doe@example.com',
-          message: 'This is a test message.',
-        }),
-      }
-    )
-      .then((data) => console.log('data', data))
-      .catch((e) => {
-        console.log('error', e);
-        router.push('/signin');
-      });
-
-    return data;
+  const handleComplete = async () => {
+    const refreshResponse = await validateAndRefreshToken({});
+    setIsLoading(false);
+    return refreshResponse;
   };
   useEffect(() => {
     async function checkIsLoggedIn() {
-      handleComplete();
+      try {
+        const response = await handleComplete();
+        setUser(response?.name!);
+        saveToken(response?.token || '');
+      } catch (e) {
+        router.push('/signin');
+      }
     }
     checkIsLoggedIn();
   }, []);

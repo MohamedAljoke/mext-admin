@@ -9,6 +9,8 @@ import { popSucess } from '@/App/components/PopUp/popSuccess';
 import CustomInput from '@/App/Shared/common/Input/Input';
 import CustomButton from '@/App/Shared/common/Button/Button';
 import { LoginSchema, LoginSchemaType } from '@/App/Schema/Auth.Schema';
+import { login } from '@/App/Services/Auth';
+import { saveToken } from '@/App/Utils/tokens';
 
 export default function Signin() {
   const router = useRouter();
@@ -20,7 +22,21 @@ export default function Signin() {
     resolver: zodResolver(LoginSchema),
   });
 
-  const onSubmit: SubmitHandler<LoginSchemaType> = (data) => {};
+  const onSubmit: SubmitHandler<LoginSchemaType> = async (data) => {
+    try {
+      const response = await login(data);
+      if (response?.token) {
+        popSucess('Logged in');
+        saveToken(response?.token || '');
+        router.push('/');
+      } else {
+        popError(JSON.stringify(response));
+      }
+    } catch (e) {
+      popError('try again later');
+    }
+  };
+
   return (
     <div className="flex  justify-center items-center bg-white50 h-screen">
       <div className="min-w-[350px]  bg-white rounded-2xl p-5 shadow-defaultShadow ">
