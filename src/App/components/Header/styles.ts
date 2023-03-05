@@ -4,13 +4,13 @@ export const HeaderDiv = tw.header`
 flex 
 justify-between
 items-center 
-px-2 
+px-4
 py-2 
 bg-darkBlue
 z-50
 h-16
 fixed
-w-full
+w-[100%]
 `;
 export const menuButton = `
 text-texts 

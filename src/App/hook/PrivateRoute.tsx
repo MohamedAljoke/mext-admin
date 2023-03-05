@@ -4,6 +4,7 @@ import Spinner from '../components/Loading/Loader';
 import Header from '../components/Header/Header';
 import { saveToken } from '../Utils/tokens';
 import { validateAndRefreshToken } from '../Services/Auth';
+import Navigation from '../components/Navigation/Navigation';
 
 interface Props {
   children: JSX.Element;
@@ -36,7 +37,7 @@ const PrivateRoute: React.FC<Props> = ({ children }) => {
     </div>
   ) : (
     <>
-      <Header user={user} />
+      <Navigation user={user} />
       {children}
     </>
   );

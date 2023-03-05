@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, SetStateAction } from 'react';
 import { Menu, Transition } from '@headlessui/react';
 import { FiChevronDown } from 'react-icons/fi';
 import { HeaderDiv, menuButton, menuItems } from './styles';
@@ -6,12 +6,19 @@ import Link from 'next/link';
 import { MdOutlineLogout } from 'react-icons/md';
 import { popSucess } from '../PopUp/popSuccess';
 import { logout } from '@/App/Services/Auth';
+import { HiOutlineMail } from 'react-icons/hi';
 
 function classNames(...classes: any) {
   return classes.filter(Boolean).join(' ');
 }
 
-export default function Header({ user }: { user: string }) {
+export default function Header({
+  user,
+  setSidebarOpen,
+}: {
+  user: string;
+  setSidebarOpen: (value: SetStateAction<boolean>) => void;
+}) {
   const handleLogout = () => {
     logout();
     popSucess('logout successfully');
@@ -20,7 +27,7 @@ export default function Header({ user }: { user: string }) {
   return (
     <HeaderDiv>
       <Link href="/">
-        <div className="flex cursor-pointer">
+        <div className="sm:flex cursor-pointer hidden ">
           <img
             className="h-8 w-auto sm:h-10 ml-8"
             src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
