@@ -73,7 +73,7 @@ export default function Signin() {
               {errors.password && <span>{errors.password?.message}</span>}
             </p>
           </div>
-          <CustomButton isSubmit={true}>Login</CustomButton>
+          <CustomButton isSubmit={true}>Admin Login</CustomButton>
         </form>
       </div>
     </div>
