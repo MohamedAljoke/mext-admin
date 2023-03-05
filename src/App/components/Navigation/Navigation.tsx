@@ -2,24 +2,29 @@ import { Fragment, useState } from 'react';
 import { Dialog, Menu, Transition } from '@headlessui/react';
 import { HiOutlineMail } from 'react-icons/hi';
 import Header from '../Header/Header';
+import Users from '@/App/Pages/Users/Users';
+import { IconType } from 'react-icons/lib';
+import Videos from '@/App/Pages/Videos/Videos';
+
+type NavigationType = {
+  name: string;
+  icon: IconType;
+  component: JSX.Element;
+};
+const navigation: NavigationType[] = [
+  {
+    name: 'Users',
+    icon: HiOutlineMail,
+    component: <Users />,
+  },
+  { name: 'Videos', icon: HiOutlineMail, component: <Videos /> },
+];
 
 export default function Navigation({ user }: { user: string }) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [currentNavigationTab, setCurrentNavigationTab] = useState<string>();
+  const [currentNavigationTab, setCurrentNavigationTab] =
+    useState<NavigationType>(navigation[0]);
 
-  const navigation = [
-    {
-      name: 'Dashboard',
-      href: '/#dashboard',
-      icon: HiOutlineMail,
-    },
-    { name: 'Team', href: '/#team', icon: HiOutlineMail },
-  ];
-  const userNavigation = [
-    { name: 'Your Profile', href: '#' },
-    { name: 'Settings', href: '#' },
-    { name: 'Sign out', href: '#' },
-  ];
   function classNames(...classes: any) {
     return classes.filter(Boolean).join(' ');
   }
@@ -66,7 +71,7 @@ export default function Navigation({ user }: { user: string }) {
                   <div className="absolute top-0 right-0 -mr-12 pt-2">
                     <button
                       type="button"
-                      className="ml-1 flex h-10 w-10 items-center justify-center rounded-full focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
+                      className=" ml-1 flex h-10 w-10 items-center justify-center rounded-full focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
                       onClick={() => setSidebarOpen(false)}
                     >
                       <span className="sr-only">Close sidebar</span>
@@ -80,11 +85,13 @@ export default function Navigation({ user }: { user: string }) {
                 <div className="mt-5 h-0 flex-1 overflow-y-auto">
                   <nav className="space-y-1 px-2">
                     {navigation.map((item) => (
-                      <a
+                      <div
+                        onClick={() => {
+                          setCurrentNavigationTab(item);
+                        }}
                         key={item.name}
-                        href={item.href}
                         className={classNames(
-                          item.name === currentNavigationTab
+                          item === currentNavigationTab
                             ? 'bg-gray-900 text-white'
                             : 'text-gray-300 hover:bg-gray-700 hover:text-white',
                           'group flex items-center rounded-md px-2 py-2 text-base font-medium'
@@ -92,7 +99,7 @@ export default function Navigation({ user }: { user: string }) {
                       >
                         <item.icon
                           className={classNames(
-                            item.name === currentNavigationTab
+                            item === currentNavigationTab
                               ? 'text-gray-300'
                               : 'text-gray-400 group-hover:text-gray-300',
                             'mr-4 h-6 w-6 flex-shrink-0'
@@ -100,7 +107,7 @@ export default function Navigation({ user }: { user: string }) {
                           aria-hidden="true"
                         />
                         {item.name}
-                      </a>
+                      </div>
                     ))}
                   </nav>
                 </div>
@@ -120,19 +127,19 @@ export default function Navigation({ user }: { user: string }) {
           <div className="mt-16 flex flex-1 flex-col overflow-y-auto">
             <nav className="flex-1 space-y-1 px-2 py-4">
               {navigation.map((item) => (
-                <a
+                <div
                   key={item.name}
-                  href={item.href}
+                  onClick={() => setCurrentNavigationTab(item)}
                   className={classNames(
-                    item.name === currentNavigationTab
+                    item === currentNavigationTab
                       ? 'bg-gray-900 text-white'
                       : 'text-gray-300 hover:bg-gray-700 hover:text-white',
-                    'group flex items-center rounded-md px-2 py-2 text-sm font-medium'
+                    'cursor-pointer group flex items-center rounded-md px-2 py-2 text-sm font-medium'
                   )}
                 >
                   <item.icon
                     className={classNames(
-                      item.name === currentNavigationTab
+                      item === currentNavigationTab
                         ? 'text-gray-300'
                         : 'text-gray-400 group-hover:text-gray-300',
                       'mr-3 h-6 w-6 flex-shrink-0'
@@ -140,7 +147,7 @@ export default function Navigation({ user }: { user: string }) {
                     aria-hidden="true"
                   />
                   {item.name}
-                </a>
+                </div>
               ))}
             </nav>
           </div>
@@ -166,7 +173,7 @@ export default function Navigation({ user }: { user: string }) {
           <div className="py-6">
             <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
               <h1 className="text-2xl font-semibold text-gray-900">
-                Dashboard
+                {currentNavigationTab.component}
               </h1>
             </div>
             <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
