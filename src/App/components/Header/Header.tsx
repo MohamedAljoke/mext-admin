@@ -5,6 +5,7 @@ import { HeaderDiv, menuButton, menuItems } from './styles';
 import Link from 'next/link';
 import { MdOutlineLogout } from 'react-icons/md';
 import { popSucess } from '../PopUp/popSuccess';
+import { logout } from '@/App/Services/Auth';
 
 function classNames(...classes: any) {
   return classes.filter(Boolean).join(' ');
@@ -12,8 +13,8 @@ function classNames(...classes: any) {
 
 export default function Header({ user }: { user: string }) {
   const handleLogout = () => {
+    logout();
     popSucess('logout successfully');
-    localStorage.clear();
   };
 
   return (

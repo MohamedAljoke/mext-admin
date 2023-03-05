@@ -40,7 +40,9 @@ export default function Signin() {
   return (
     <div className="flex  justify-center items-center bg-white50 h-screen">
       <div className="min-w-[350px]  bg-white rounded-2xl p-5 shadow-defaultShadow ">
-        <p className="text-center font-bold text-2xl text-lightBlack">Login</p>
+        <p className="text-center font-bold text-2xl text-lightBlack">
+          Admin Login
+        </p>
         <form
           className="flex flex-col gap-4 my-8"
           onSubmit={handleSubmit(onSubmit)}
@@ -89,7 +91,7 @@ export default function Signin() {
               {errors.password && <span>{errors.password?.message}</span>}
             </p>
           </div>
-          <CustomButton isSubmit={true}>Admin Login</CustomButton>
+          <CustomButton isSubmit={true}>Login</CustomButton>
         </form>
       </div>
     </div>
