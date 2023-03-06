@@ -7,7 +7,7 @@ export default function Lectuers({
 }: {
   lectuers: LectuerSchemaType[];
 }) {
-  const lectuerTableHeader = ['id', 'email', 'name'];
+  const lectuerTableHeader = ['id', 'chapter_id', 'video_id', 'lecture_name'];
   return (
     <div>
       <Table tableHeader={lectuerTableHeader} tableContent={lectuers} />

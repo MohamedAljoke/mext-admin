@@ -25,12 +25,6 @@ const navigation: NavigationType[] = [
     href: '/users',
   },
   {
-    addButtonText: 'Add video',
-    name: 'Videos',
-    icon: HiOutlineVideoCamera,
-    href: '/videos',
-  },
-  {
     addButtonText: 'Add subject',
     name: 'Subjects',
     icon: AiFillFolder,
@@ -41,6 +35,12 @@ const navigation: NavigationType[] = [
     name: 'Lectures',
     icon: AiFillFolderOpen,
     href: '/lectures',
+  },
+  {
+    addButtonText: 'Add video',
+    name: 'Videos',
+    icon: HiOutlineVideoCamera,
+    href: '/videos',
   },
 ];
 
