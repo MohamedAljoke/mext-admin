@@ -1,5 +1,5 @@
 import { Fragment, useState } from 'react';
-import { Dialog, Menu, Transition } from '@headlessui/react';
+import { Dialog, Transition } from '@headlessui/react';
 import { HiOutlineMail } from 'react-icons/hi';
 import Header from '../Header/Header';
 import Users from '@/App/Pages/Users/Users';
@@ -20,7 +20,12 @@ const navigation: NavigationType[] = [
   { name: 'Videos', icon: HiOutlineMail, component: <Videos /> },
 ];
 
-export default function Navigation({ user }: { user: string }) {
+interface Props {
+  children: JSX.Element;
+  user: string;
+}
+
+export default function Navigation({ user, children }: Props) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [currentNavigationTab, setCurrentNavigationTab] =
     useState<NavigationType>(navigation[0]);
@@ -177,7 +182,7 @@ export default function Navigation({ user }: { user: string }) {
               </h1>
             </div>
             <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-              {/* Your content */}
+              {children}
             </div>
           </div>
         </main>

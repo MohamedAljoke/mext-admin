@@ -37,8 +37,7 @@ const PrivateRoute: React.FC<Props> = ({ children }) => {
     </div>
   ) : (
     <>
-      <Navigation user={user} />
-      {children}
+      <Navigation user={user}>{children}</Navigation>
     </>
   );
 };

@@ -11,6 +11,7 @@ import CustomButton from '@/App/Shared/common/Button/Button';
 import { LoginSchema, LoginSchemaType } from '@/App/Schema/Auth.Schema';
 import { login } from '@/App/Services/Auth';
 import { saveToken } from '@/App/Utils/tokens';
+import cookie from 'cookie';
 
 export default function Signin() {
   const router = useRouter();
@@ -26,8 +27,18 @@ export default function Signin() {
     try {
       const response = await login(data);
       if (response?.token) {
+        const cookieOptions = {
+          maxAge: 30 * 24 * 60 * 60, // 30 days
+          path: '/',
+        };
+        const cookieValue = cookie.serialize(
+          'auth-token',
+          response.token,
+          cookieOptions
+        );
+        document.cookie = cookieValue;
         popSucess('Logged in');
-        saveToken(response?.token || '');
+        saveToken(response.token || '');
         router.push('/');
       } else {
         popError(JSON.stringify(response));
