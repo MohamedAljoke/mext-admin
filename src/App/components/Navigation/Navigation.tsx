@@ -1,10 +1,14 @@
 import { Fragment, useEffect, useState } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
-import { HiOutlineMail } from 'react-icons/hi';
+import { HiOutlineVideoCamera } from 'react-icons/hi';
+import { AiOutlineClose } from 'react-icons/ai';
+import { GiHamburgerMenu } from 'react-icons/gi';
+import { MdPersonOutline } from 'react-icons/md';
 import Header from '../Header/Header';
 import Link from 'next/link';
 import { IconType } from 'react-icons/lib';
 import { useRouter } from 'next/router';
+import CustomButton from '@/App/Shared/common/Button/Button';
 
 type NavigationType = {
   name: string;
@@ -17,13 +21,13 @@ const navigation: NavigationType[] = [
   {
     name: 'Users',
     addButtonText: 'Add user',
-    icon: HiOutlineMail,
+    icon: MdPersonOutline,
     href: '/users',
   },
   {
     addButtonText: 'Add video',
     name: 'Videos',
-    icon: HiOutlineMail,
+    icon: HiOutlineVideoCamera,
     href: '/videos',
   },
 ];
@@ -100,7 +104,7 @@ export default function Navigation({ user, children }: Props) {
                       onClick={() => setSidebarOpen(false)}
                     >
                       <span className="sr-only">Close sidebar</span>
-                      <HiOutlineMail
+                      <AiOutlineClose
                         className="h-6 w-6 text-white"
                         aria-hidden="true"
                       />
@@ -183,7 +187,7 @@ export default function Navigation({ user, children }: Props) {
             onClick={() => setSidebarOpen(true)}
           >
             <span className="sr-only">Open sidebar</span>
-            <HiOutlineMail className="h-6 w-6" aria-hidden="true" />
+            <GiHamburgerMenu className="h-6 w-6" aria-hidden="true" />
           </button>
           <div className="flex items-center">
             {/* Profile dropdown */}
@@ -191,23 +195,17 @@ export default function Navigation({ user, children }: Props) {
           </div>
         </div>
 
-        <main className="flex-1">
-          <div className="py-6">
-            <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 flex justify-between">
+        <main className="flex-1 ">
+          <div className="py-6 lg:ml-60 px-16">
+            <div className="flex justify-between">
               <h1 className="text-2xl font-semibold text-gray-900">
                 {currentNavigationTab.name}
               </h1>
-
-              <button
-                type="button"
-                className="block rounded-md bg-indigo-600 py-2 px-3 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-              >
+              <CustomButton isSubmit={true}>
                 {currentNavigationTab.addButtonText}
-              </button>
+              </CustomButton>
             </div>
-            <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-              {children}
-            </div>
+            <div className="">{children}</div>
           </div>
         </main>
       </div>
