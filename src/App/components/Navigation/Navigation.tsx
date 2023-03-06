@@ -1,7 +1,7 @@
 import { Fragment, useEffect, useState } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 import { HiOutlineVideoCamera } from 'react-icons/hi';
-import { AiOutlineClose } from 'react-icons/ai';
+import { AiOutlineClose, AiFillFolderOpen, AiFillFolder } from 'react-icons/ai';
 import { GiHamburgerMenu } from 'react-icons/gi';
 import { MdPersonOutline } from 'react-icons/md';
 import Header from '../Header/Header';
@@ -29,6 +29,18 @@ const navigation: NavigationType[] = [
     name: 'Videos',
     icon: HiOutlineVideoCamera,
     href: '/videos',
+  },
+  {
+    addButtonText: 'Add subject',
+    name: 'Subjects',
+    icon: AiFillFolder,
+    href: '/subjects',
+  },
+  {
+    addButtonText: 'Add lecture',
+    name: 'Lectures',
+    icon: AiFillFolderOpen,
+    href: '/lectures',
   },
 ];
 
