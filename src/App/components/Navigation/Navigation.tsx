@@ -1,23 +1,31 @@
-import { Fragment, useState } from 'react';
+import { Fragment, useEffect, useState } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 import { HiOutlineMail } from 'react-icons/hi';
 import Header from '../Header/Header';
-import Users from '@/App/Pages/Users/Users';
+import Link from 'next/link';
 import { IconType } from 'react-icons/lib';
-import Videos from '@/App/Pages/Videos/Videos';
+import { useRouter } from 'next/router';
 
 type NavigationType = {
   name: string;
   icon: IconType;
-  component: JSX.Element;
+  href: string;
+  addButtonText: string;
 };
+
 const navigation: NavigationType[] = [
   {
     name: 'Users',
+    addButtonText: 'Add user',
     icon: HiOutlineMail,
-    component: <Users />,
+    href: '/users',
   },
-  { name: 'Videos', icon: HiOutlineMail, component: <Videos /> },
+  {
+    addButtonText: 'Add video',
+    name: 'Videos',
+    icon: HiOutlineMail,
+    href: '/videos',
+  },
 ];
 
 interface Props {
@@ -26,9 +34,21 @@ interface Props {
 }
 
 export default function Navigation({ user, children }: Props) {
+  const router = useRouter();
+
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [currentNavigationTab, setCurrentNavigationTab] =
     useState<NavigationType>(navigation[0]);
+
+  useEffect(() => {
+    const path = router.pathname;
+    const choosenTab = navigation.find((item) => item.href === path);
+    if (!choosenTab) {
+      router.push('/notFound');
+    } else {
+      setCurrentNavigationTab(choosenTab);
+    }
+  }, [router.pathname]);
 
   function classNames(...classes: any) {
     return classes.filter(Boolean).join(' ');
@@ -89,38 +109,34 @@ export default function Navigation({ user, children }: Props) {
                 </Transition.Child>
                 <div className="mt-5 h-0 flex-1 overflow-y-auto">
                   <nav className="space-y-1 px-2">
-                    {navigation.map((item) => (
-                      <div
-                        onClick={() => {
-                          setCurrentNavigationTab(item);
-                        }}
-                        key={item.name}
-                        className={classNames(
-                          item === currentNavigationTab
-                            ? 'bg-gray-900 text-white'
-                            : 'text-gray-300 hover:bg-gray-700 hover:text-white',
-                          'group flex items-center rounded-md px-2 py-2 text-base font-medium'
-                        )}
-                      >
-                        <item.icon
+                    {navigation.map((item, idx) => (
+                      <Link key={idx} href={item.href}>
+                        <div
+                          key={item.name}
                           className={classNames(
                             item === currentNavigationTab
-                              ? 'text-gray-300'
-                              : 'text-gray-400 group-hover:text-gray-300',
-                            'mr-4 h-6 w-6 flex-shrink-0'
+                              ? 'bg-gray-900 text-white'
+                              : 'text-gray-300 hover:bg-gray-700 hover:text-white',
+                            'group flex items-center rounded-md px-2 py-2 text-base font-medium'
                           )}
-                          aria-hidden="true"
-                        />
-                        {item.name}
-                      </div>
+                        >
+                          <item.icon
+                            className={classNames(
+                              item === currentNavigationTab
+                                ? 'text-gray-300'
+                                : 'text-gray-400 group-hover:text-gray-300',
+                              'mr-4 h-6 w-6 flex-shrink-0'
+                            )}
+                            aria-hidden="true"
+                          />
+                          {item.name}
+                        </div>
+                      </Link>
                     ))}
                   </nav>
                 </div>
               </Dialog.Panel>
             </Transition.Child>
-            <div className="w-14 flex-shrink-0" aria-hidden="true">
-              {/* Dummy element to force sidebar to shrink to fit close icon */}
-            </div>
           </div>
         </Dialog>
       </Transition.Root>
@@ -131,28 +147,29 @@ export default function Navigation({ user, children }: Props) {
         <div className="flex min-h-0 flex-1 flex-col bg-gray-800">
           <div className="mt-16 flex flex-1 flex-col overflow-y-auto">
             <nav className="flex-1 space-y-1 px-2 py-4">
-              {navigation.map((item) => (
-                <div
-                  key={item.name}
-                  onClick={() => setCurrentNavigationTab(item)}
-                  className={classNames(
-                    item === currentNavigationTab
-                      ? 'bg-gray-900 text-white'
-                      : 'text-gray-300 hover:bg-gray-700 hover:text-white',
-                    'cursor-pointer group flex items-center rounded-md px-2 py-2 text-sm font-medium'
-                  )}
-                >
-                  <item.icon
+              {navigation.map((item, idx) => (
+                <Link key={idx} href={item.href}>
+                  <div
+                    key={item.name}
                     className={classNames(
                       item === currentNavigationTab
-                        ? 'text-gray-300'
-                        : 'text-gray-400 group-hover:text-gray-300',
-                      'mr-3 h-6 w-6 flex-shrink-0'
+                        ? 'bg-gray-900 text-white'
+                        : 'text-gray-300 hover:bg-gray-700 hover:text-white',
+                      'cursor-pointer group flex items-center rounded-md px-2 py-2 text-sm font-medium'
                     )}
-                    aria-hidden="true"
-                  />
-                  {item.name}
-                </div>
+                  >
+                    <item.icon
+                      className={classNames(
+                        item === currentNavigationTab
+                          ? 'text-gray-300'
+                          : 'text-gray-400 group-hover:text-gray-300',
+                        'mr-3 h-6 w-6 flex-shrink-0'
+                      )}
+                      aria-hidden="true"
+                    />
+                    {item.name}
+                  </div>
+                </Link>
               ))}
             </nav>
           </div>
@@ -176,10 +193,17 @@ export default function Navigation({ user, children }: Props) {
 
         <main className="flex-1">
           <div className="py-6">
-            <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 flex justify-between">
               <h1 className="text-2xl font-semibold text-gray-900">
-                {currentNavigationTab.component}
+                {currentNavigationTab.name}
               </h1>
+
+              <button
+                type="button"
+                className="block rounded-md bg-indigo-600 py-2 px-3 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+              >
+                {currentNavigationTab.addButtonText}
+              </button>
             </div>
             <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
               {children}

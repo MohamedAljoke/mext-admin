@@ -22,7 +22,6 @@ export const getServerSideProps: GetServerSideProps<PageProps> = async (
     });
     return { props: { users: usersList } };
   } catch (e) {
-    console.log('error fetching data', e);
     return { props: { error: 'error fetching data' } };
   }
 };

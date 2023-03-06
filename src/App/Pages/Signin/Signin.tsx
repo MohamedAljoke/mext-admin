@@ -39,7 +39,7 @@ export default function Signin() {
         document.cookie = cookieValue;
         popSucess('Logged in');
         saveToken(response.token || '');
-        router.push('/');
+        router.push('/users');
       } else {
         popError(JSON.stringify(response));
       }
