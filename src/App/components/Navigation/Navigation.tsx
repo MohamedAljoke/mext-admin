@@ -1,7 +1,14 @@
 import { Fragment, useEffect, useState } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 import { HiOutlineVideoCamera } from 'react-icons/hi';
-import { AiOutlineClose, AiFillFolderOpen, AiFillFolder } from 'react-icons/ai';
+import { MdFolder } from 'react-icons/md';
+import {
+  AiOutlineClose,
+  AiFillFolderOpen,
+  AiFillFolder,
+  AiFillFilePdf,
+  AiFillQuestionCircle,
+} from 'react-icons/ai';
 import { GiHamburgerMenu } from 'react-icons/gi';
 import { MdPersonOutline } from 'react-icons/md';
 import Header from '../Header/Header';
@@ -31,6 +38,12 @@ const navigation: NavigationType[] = [
     href: '/subjects',
   },
   {
+    addButtonText: 'Add chapter',
+    name: 'Chapters',
+    icon: MdFolder,
+    href: '/chapters',
+  },
+  {
     addButtonText: 'Add lecture',
     name: 'Lectures',
     icon: AiFillFolderOpen,
@@ -41,6 +54,18 @@ const navigation: NavigationType[] = [
     name: 'Videos',
     icon: HiOutlineVideoCamera,
     href: '/videos',
+  },
+  {
+    addButtonText: 'Add pdf',
+    name: 'Pdfs',
+    icon: AiFillFilePdf,
+    href: '/pdfs',
+  },
+  {
+    addButtonText: 'Add question',
+    name: 'Questions',
+    icon: AiFillQuestionCircle,
+    href: '/questions',
   },
 ];
 
