@@ -1,6 +1,7 @@
 import { HiOutlineTrash } from 'react-icons/hi';
-import { AiOutlineEdit } from 'react-icons/ai';
+import { AiOutlineEdit, AiOutlineFileSearch } from 'react-icons/ai';
 import { DateTime } from 'luxon';
+import Link from 'next/link';
 
 interface TableProps<T extends { id: number }> {
   tableHeader: (keyof T)[];
@@ -9,6 +10,8 @@ interface TableProps<T extends { id: number }> {
   openDeleteModal?: (data: T) => void;
   showDelete?: boolean;
   showEdit?: boolean;
+  hasDetails?: boolean;
+  detailsLink?: string;
 }
 
 export default function Table<T extends { id: number }>({
@@ -17,6 +20,8 @@ export default function Table<T extends { id: number }>({
   openEditModal,
   openDeleteModal,
   showDelete = true,
+  hasDetails,
+  detailsLink,
   showEdit = true,
 }: TableProps<T>) {
   return (
@@ -74,6 +79,18 @@ export default function Table<T extends { id: number }>({
                     );
                   })}
                   <td className="flex justify-around relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">
+                    {hasDetails && detailsLink && (
+                      <Link
+                        href={detailsLink}
+                        className="text-indigo-600 hover:text-indigo-900 hover:cursor-pointer"
+                      >
+                        <div className="flex items-center">
+                          <AiOutlineFileSearch className="mr-1" size={20} />
+                          Go to
+                          <span className="sr-only">, {idx}</span>
+                        </div>
+                      </Link>
+                    )}
                     <div
                       className="text-indigo-600 hover:text-indigo-900 hover:cursor-pointer"
                       onClick={() => openEditModal(contentItem)}

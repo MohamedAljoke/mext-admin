@@ -83,7 +83,9 @@ export default function EditSubject({
             {errors.subject_name && <span>{errors.subject_name?.message}</span>}
           </p>
         </div>
-        <CustomButton isSubmit={true}>Save</CustomButton>
+        <CustomButton customCss="max-w-[80px]" isSubmit={true}>
+          Save
+        </CustomButton>
       </form>
     </>
   );

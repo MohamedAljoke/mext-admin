@@ -23,6 +23,7 @@ type NavigationType = {
   href: string;
   create: string;
   addButtonText: string;
+  details?: string;
 };
 
 const navigation: NavigationType[] = [
@@ -39,6 +40,7 @@ const navigation: NavigationType[] = [
     icon: AiFillFolder,
     href: '/subjects',
     create: '/subjects/create',
+    details: '/subjects/:id',
   },
   {
     addButtonText: 'Add chapter',
@@ -87,7 +89,7 @@ export default function Navigation({ user, children }: Props) {
 
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [currentNavigationTab, setCurrentNavigationTab] =
-    useState<NavigationType>(navigation[0]);
+    useState<NavigationType | null>(navigation[0]);
 
   useEffect(() => {
     const path = router.pathname;
@@ -95,7 +97,7 @@ export default function Navigation({ user, children }: Props) {
       (item) => item.href === path || item.create === path
     );
     if (!choosenTab) {
-      router.push('/notFound');
+      setCurrentNavigationTab(null);
     } else {
       setCurrentNavigationTab(choosenTab);
     }
@@ -245,7 +247,7 @@ export default function Navigation({ user, children }: Props) {
         <main className="flex-1 ">
           <div className="py-6 lg:ml-60 px-16">
             <>
-              {router.pathname === currentNavigationTab.create ? (
+              {router.pathname === currentNavigationTab?.create ? (
                 <div className="flex items-center">
                   <CustomButton
                     color="bg-[#6EB5D6]"
@@ -263,14 +265,18 @@ export default function Navigation({ user, children }: Props) {
                 </div>
               ) : (
                 <div className="flex justify-between">
-                  <h1 className="text-2xl font-semibold text-gray-900">
-                    {currentNavigationTab.name}
-                  </h1>
-                  <Link href={currentNavigationTab.create}>
-                    <CustomButton isSubmit={false}>
-                      {currentNavigationTab.addButtonText}
-                    </CustomButton>
-                  </Link>
+                  {currentNavigationTab && (
+                    <>
+                      <h1 className="text-2xl font-semibold text-gray-900">
+                        {currentNavigationTab?.name}
+                      </h1>
+                      <Link href={currentNavigationTab.create}>
+                        <CustomButton isSubmit={false}>
+                          {currentNavigationTab?.addButtonText}
+                        </CustomButton>
+                      </Link>
+                    </>
+                  )}
                 </div>
               )}
             </>
