@@ -1,8 +1,11 @@
 import axios from 'axios';
 import { API } from './base/axios';
-import { SubjectSchemaType } from '../Schema/Subject.Schema';
+import {
+  CreateSubjectSchemaType,
+  SubjectSchemaType,
+} from '../Schema/Subject.Schema';
 import put from './base/put';
-import { deleteRequest } from './base';
+import { deleteRequest, post } from './base';
 
 export const fetchSubjectsList = async ({
   token,
@@ -32,4 +35,11 @@ export const deleteSubject = async (subjectId: number) => {
   const response = await deleteRequest({
     url: `/subjects/${subjectId}`,
   });
+};
+export const createSubject = async (subject: CreateSubjectSchemaType) => {
+  const response = await post({
+    url: `/subjects`,
+    body: subject,
+  });
+  return response as SubjectSchemaType;
 };

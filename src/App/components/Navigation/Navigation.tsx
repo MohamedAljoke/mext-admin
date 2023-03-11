@@ -10,7 +10,7 @@ import {
   AiFillQuestionCircle,
 } from 'react-icons/ai';
 import { GiHamburgerMenu } from 'react-icons/gi';
-import { MdPersonOutline } from 'react-icons/md';
+import { MdPersonOutline, MdArrowBackIos } from 'react-icons/md';
 import Header from '../Header/Header';
 import Link from 'next/link';
 import { IconType } from 'react-icons/lib';
@@ -21,6 +21,7 @@ type NavigationType = {
   name: string;
   icon: IconType;
   href: string;
+  create: string;
   addButtonText: string;
 };
 
@@ -30,42 +31,49 @@ const navigation: NavigationType[] = [
     addButtonText: 'Add user',
     icon: MdPersonOutline,
     href: '/users',
+    create: '/create',
   },
   {
     addButtonText: 'Add subject',
     name: 'Subjects',
     icon: AiFillFolder,
     href: '/subjects',
+    create: '/subjects/create',
   },
   {
     addButtonText: 'Add chapter',
     name: 'Chapters',
     icon: MdFolder,
     href: '/chapters',
+    create: '/create',
   },
   {
     addButtonText: 'Add lecture',
     name: 'Lectures',
     icon: AiFillFolderOpen,
     href: '/lectures',
+    create: '/lectures/create',
   },
   {
     addButtonText: 'Add video',
     name: 'Videos',
     icon: HiOutlineVideoCamera,
     href: '/videos',
+    create: '/videos/create',
   },
   {
     addButtonText: 'Add pdf',
     name: 'Pdfs',
     icon: AiFillFilePdf,
     href: '/pdfs',
+    create: '/pdfs/create',
   },
   {
     addButtonText: 'Add question',
     name: 'Questions',
     icon: AiFillQuestionCircle,
     href: '/questions',
+    create: '/questions/create',
   },
 ];
 
@@ -83,7 +91,9 @@ export default function Navigation({ user, children }: Props) {
 
   useEffect(() => {
     const path = router.pathname;
-    const choosenTab = navigation.find((item) => item.href === path);
+    const choosenTab = navigation.find(
+      (item) => item.href === path || item.create === path
+    );
     if (!choosenTab) {
       router.push('/notFound');
     } else {
@@ -234,14 +244,36 @@ export default function Navigation({ user, children }: Props) {
 
         <main className="flex-1 ">
           <div className="py-6 lg:ml-60 px-16">
-            <div className="flex justify-between">
-              <h1 className="text-2xl font-semibold text-gray-900">
-                {currentNavigationTab.name}
-              </h1>
-              <CustomButton isSubmit={true}>
-                {currentNavigationTab.addButtonText}
-              </CustomButton>
-            </div>
+            <>
+              {router.pathname === currentNavigationTab.create ? (
+                <div className="flex items-center">
+                  <CustomButton
+                    color="bg-[#6EB5D6]"
+                    onClick={() => {
+                      router.back();
+                    }}
+                    isSubmit={false}
+                  >
+                    <MdArrowBackIos />
+                    back
+                  </CustomButton>
+                  <h1 className="ml-8 text-2xl text-center font-semibold text-gray-900">
+                    Create Element
+                  </h1>
+                </div>
+              ) : (
+                <div className="flex justify-between">
+                  <h1 className="text-2xl font-semibold text-gray-900">
+                    {currentNavigationTab.name}
+                  </h1>
+                  <Link href={currentNavigationTab.create}>
+                    <CustomButton isSubmit={false}>
+                      {currentNavigationTab.addButtonText}
+                    </CustomButton>
+                  </Link>
+                </div>
+              )}
+            </>
             <div className="">{children}</div>
           </div>
         </main>

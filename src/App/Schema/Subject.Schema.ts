@@ -15,3 +15,8 @@ export const EditSubjectSchema = object({
   subject_name: string(),
 });
 export type EditSubjectSchemaType = TypeOf<typeof EditSubjectSchema>;
+
+export const CreateSubjectSchema = object({
+  subjectName: string(),
+});
+export type CreateSubjectSchemaType = TypeOf<typeof CreateSubjectSchema>;
