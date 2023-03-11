@@ -8,3 +8,10 @@ export const UserSchema = object({
   updated_at: date(),
 });
 export type UserSchemaType = TypeOf<typeof UserSchema>;
+
+export const EditUserSchema = object({
+  name: string(),
+  email: string(),
+});
+
+export type EditUserSchemaType = TypeOf<typeof EditUserSchema>;
