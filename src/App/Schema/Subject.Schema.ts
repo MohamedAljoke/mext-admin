@@ -10,3 +10,8 @@ export const SubjectSchema = object({
 });
 
 export type SubjectSchemaType = TypeOf<typeof SubjectSchema>;
+
+export const EditSubjectSchema = object({
+  subject_name: string(),
+});
+export type EditSubjectSchemaType = TypeOf<typeof EditSubjectSchema>;

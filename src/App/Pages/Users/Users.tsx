@@ -4,6 +4,7 @@ import Table from '@/App/components/Table/Table';
 import { Dialog } from '@headlessui/react';
 import React, { useEffect, useState } from 'react';
 import EditUser from './EditUser/EditUser';
+import DeleteUser from './DeleteUser/DeleteUser';
 
 export default function Users({ users }: { users: UserSchemaType[] }) {
   const [openEdit, setOpenEdit] = useState(false);
@@ -11,11 +12,11 @@ export default function Users({ users }: { users: UserSchemaType[] }) {
   const [choosenUser, setChoosenUser] = useState<UserSchemaType>();
   const [updatedUser, setUpdatedUser] = useState<UserSchemaType>();
 
-  const openModal = (user: UserSchemaType) => {
+  const openEditModal = (user: UserSchemaType) => {
     setChoosenUser(user);
     setOpenEdit(true);
   };
-  const closeModal = () => {
+  const closeEditModal = () => {
     setOpenEdit(false);
   };
   useEffect(() => {
@@ -42,16 +43,17 @@ export default function Users({ users }: { users: UserSchemaType[] }) {
   ];
   return (
     <div>
-      <CustomModal isOpen={openEdit} closeModal={closeModal}>
+      <CustomModal isOpen={openEdit} closeModal={closeEditModal}>
         <EditUser
           choosenUser={choosenUser}
-          closeModal={closeModal}
+          closeModal={closeEditModal}
           setUpdatedUser={setUpdatedUser}
         />
       </CustomModal>
       {usersList?.length ? (
         <Table<UserSchemaType>
-          openModal={openModal}
+          showDelete={false}
+          openEditModal={openEditModal}
           tableHeader={tableHeader}
           tableContent={usersList}
         />

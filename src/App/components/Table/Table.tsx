@@ -2,16 +2,22 @@ import { HiOutlineTrash } from 'react-icons/hi';
 import { AiOutlineEdit } from 'react-icons/ai';
 import { DateTime } from 'luxon';
 
-interface TableProps<T> {
+interface TableProps<T extends { id: number }> {
   tableHeader: (keyof T)[];
   tableContent: T[];
-  openModal: (data: T) => void;
+  openEditModal: (data: T) => void;
+  openDeleteModal?: (data: T) => void;
+  showDelete?: boolean;
+  showEdit?: boolean;
 }
 
-export default function Table<T>({
+export default function Table<T extends { id: number }>({
   tableHeader,
   tableContent,
-  openModal,
+  openEditModal,
+  openDeleteModal,
+  showDelete = true,
+  showEdit = true,
 }: TableProps<T>) {
   return (
     <div className="mt-8 flow-root">
@@ -70,7 +76,7 @@ export default function Table<T>({
                   <td className="flex justify-around relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">
                     <div
                       className="text-indigo-600 hover:text-indigo-900 hover:cursor-pointer"
-                      onClick={() => openModal(contentItem)}
+                      onClick={() => openEditModal(contentItem)}
                     >
                       <div className="flex items-center">
                         <AiOutlineEdit className="mr-1" size={20} />
@@ -78,13 +84,18 @@ export default function Table<T>({
                         <span className="sr-only">, {idx}</span>
                       </div>
                     </div>
-                    <a href="#" className="text-red-600 hover:text-indigo-900">
-                      <div className="flex items-center">
-                        <HiOutlineTrash className="mr-1" size={20} />
-                        Delete
-                        <span className="sr-only">, {idx}</span>
+                    {showDelete && openDeleteModal && (
+                      <div
+                        onClick={() => openDeleteModal(contentItem)}
+                        className="text-red-600 hover:text-indigo-900 hover:cursor-pointer"
+                      >
+                        <div className="flex items-center">
+                          <HiOutlineTrash className="mr-1" size={20} />
+                          Delete
+                          <span className="sr-only">, {idx}</span>
+                        </div>
                       </div>
-                    </a>
+                    )}
                   </td>
                 </tr>
               ))}
