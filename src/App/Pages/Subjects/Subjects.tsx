@@ -73,7 +73,7 @@ export default function Subjects({
       {subjectList ? (
         <Table<SubjectSchemaType>
           hasDetails={true}
-          detailsLink={'/subject/12'}
+          detailsLink={'/subject/'}
           openDeleteModal={openDeleteModal}
           openEditModal={openEditModal}
           tableHeader={subjectTableHeader}
