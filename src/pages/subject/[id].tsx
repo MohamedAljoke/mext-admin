@@ -1,12 +1,12 @@
 import Chapters from '@/App/Pages/Chapters/Chapters';
 import { ChapterSchemaType } from '@/App/Schema/Chapter.Schema';
-import {
-  fetchChaptersList,
-  fetchSubjectChapters,
-} from '@/App/Services/Chapters';
+import { fetchSubjectChapters } from '@/App/Services/Chapters';
+import CustomButton from '@/App/Shared/common/Button/Button';
 import PrivateRoute from '@/App/hook/PrivateRoute';
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
+import { useRouter } from 'next/router';
 import React from 'react';
+import { MdArrowBackIos } from 'react-icons/md';
 
 interface PageProps {
   chapters?: ChapterSchemaType[];
@@ -35,12 +35,29 @@ export default function SubjectPage({
   chapters,
   error,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
-  console.log(chapters);
+  const router = useRouter();
   return (
     <PrivateRoute>
       <>
         {chapters && chapters?.length > 0 ? (
-          <Chapters chapters={chapters} />
+          <>
+            <div className="flex items-center">
+              <CustomButton
+                color="bg-[#6EB5D6]"
+                onClick={() => {
+                  router.back();
+                }}
+                isSubmit={false}
+              >
+                <MdArrowBackIos />
+                back
+              </CustomButton>
+              <h1 className="ml-8 text-2xl text-center font-semibold text-gray-900">
+                Subject chapters
+              </h1>
+            </div>
+            <Chapters chapters={chapters} />
+          </>
         ) : (
           <h2 className="flex items-center text-center">
             No Chapter where found

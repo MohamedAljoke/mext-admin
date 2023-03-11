@@ -1,6 +1,5 @@
 import { getToken } from '@/App/Utils/tokens';
 import { NextApiRequest } from 'next';
-import { parse } from 'cookie';
 
 interface WithTokenRequest {
   headers: {

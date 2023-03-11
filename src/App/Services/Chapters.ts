@@ -1,6 +1,10 @@
 import axios from 'axios';
 import { API } from './base/axios';
-import { ChapterSchemaType } from '../Schema/Chapter.Schema';
+import {
+  ChapterSchemaType,
+  CreateChapterSchemaType,
+} from '../Schema/Chapter.Schema';
+import { post } from './base';
 
 export const fetchChaptersList = async ({
   token,
@@ -29,4 +33,11 @@ export const fetchSubjectChapters = async ({
     },
   });
   return response.data as ChapterSchemaType[];
+};
+export const createChapter = async (chapter: CreateChapterSchemaType) => {
+  const response = await post({
+    url: `/chapters`,
+    body: chapter,
+  });
+  return response as CreateChapterSchemaType;
 };

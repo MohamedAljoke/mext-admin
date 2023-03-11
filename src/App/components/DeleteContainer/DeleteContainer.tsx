@@ -25,7 +25,6 @@ export default function DeleteElement<T extends { id: number }>({
           onClick={closeDeleteModal}
           color="bg-red-500"
           hoverColor="hover:bg-red-600"
-          isSubmit={true}
         >
           close
         </CustomButton>

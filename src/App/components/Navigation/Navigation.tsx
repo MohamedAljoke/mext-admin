@@ -32,7 +32,7 @@ const navigation: NavigationType[] = [
     addButtonText: 'Add user',
     icon: MdPersonOutline,
     href: '/users',
-    create: '/create',
+    create: '#create',
   },
   {
     addButtonText: 'Add subject',
@@ -47,7 +47,8 @@ const navigation: NavigationType[] = [
     name: 'Chapters',
     icon: MdFolder,
     href: '/chapters',
-    create: '/create',
+    create: '/chapters/create',
+    details: '/chapters/:id',
   },
   {
     addButtonText: 'Add lecture',

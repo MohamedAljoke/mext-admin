@@ -1,9 +1,18 @@
-import { SubjectSchemaType } from '@/App/Schema/Subject.Schema';
+import {
+  EditSubjectSchema,
+  EditSubjectSchemaType,
+  SubjectSchema,
+  SubjectSchemaType,
+} from '@/App/Schema/Subject.Schema';
 import CustomModal from '@/App/components/Modal/Modal';
 import Table from '@/App/components/Table/Table';
 import React, { useEffect, useState } from 'react';
-import EditSubject from './EditSubject/EditSubject';
 import DeleteElement from '@/App/components/DeleteContainer/DeleteContainer';
+import EditElement from '@/App/components/EditElement/EditElement';
+import { SubmitHandler } from 'react-hook-form';
+import { updateSubject } from '@/App/Services/Subjects';
+import { popSucess } from '@/App/components/PopUp/popSuccess';
+import { popError } from '@/App/components/PopUp/popError';
 
 export default function Subjects({
   subjects,
@@ -35,12 +44,12 @@ export default function Subjects({
       setSubjectList(subjects);
     }
   }, [subjects, updatedSubject]);
+  //modals
   const openEditModal = (subject: SubjectSchemaType) => {
     setChoosenSubject(subject);
     setOpenEdit(true);
   };
   const deleteItem = (item: SubjectSchemaType) => {
-    console.log(item);
     setOpenDelete(false);
   };
 
@@ -54,13 +63,41 @@ export default function Subjects({
   const closeEditModal = () => {
     setOpenEdit(false);
   };
+  //edit
+  const onSubmit: SubmitHandler<EditSubjectSchemaType> = async (data) => {
+    if (!choosenSubject) {
+      throw Error('no subject');
+    }
+    try {
+      const response = await updateSubject({
+        subject: { ...choosenSubject, ...data },
+      });
+      setUpdatedSubject({
+        ...choosenSubject,
+        subject_name: response.subject_name,
+      });
+      popSucess('Subject Updated');
+      closeEditModal();
+    } catch (e) {
+      console.log(e);
+      popError('try again later');
+    }
+  };
   return (
     <div>
       <CustomModal isOpen={openEdit} closeModal={closeEditModal}>
-        <EditSubject
-          choosenSubject={choosenSubject}
+        <EditElement<EditSubjectSchemaType, typeof EditSubjectSchema>
+          items={[
+            {
+              name: 'subject_name',
+              placeholder: 'Subject',
+              label: 'Subject',
+            },
+          ]}
+          onSubmit={onSubmit}
+          choosenElement={choosenSubject}
           closeModal={closeEditModal}
-          setUpdatedSubject={setUpdatedSubject}
+          itemSchema={EditSubjectSchema}
         />
       </CustomModal>
       <CustomModal isOpen={openDelete} closeModal={closeDeleteModal}>

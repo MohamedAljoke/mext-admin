@@ -2,6 +2,7 @@ import { HiOutlineTrash } from 'react-icons/hi';
 import { AiOutlineEdit, AiOutlineFileSearch } from 'react-icons/ai';
 import { DateTime } from 'luxon';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 
 interface TableProps<T extends { id: number }> {
   tableHeader: (keyof T)[];
@@ -24,6 +25,7 @@ export default function Table<T extends { id: number }>({
   detailsLink,
   showEdit = true,
 }: TableProps<T>) {
+  const router = useRouter();
   return (
     <div className="mt-8 flow-root">
       <div className="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">
@@ -80,8 +82,10 @@ export default function Table<T extends { id: number }>({
                   })}
                   <td className="flex justify-around relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">
                     {hasDetails && detailsLink && (
-                      <Link
-                        href={`${detailsLink}/${contentItem.id}`}
+                      <div
+                        onClick={() =>
+                          router.push(`${detailsLink}/${contentItem.id}`)
+                        }
                         className="text-indigo-600 hover:text-indigo-900 hover:cursor-pointer"
                       >
                         <div className="flex items-center">
@@ -89,7 +93,7 @@ export default function Table<T extends { id: number }>({
                           Go to
                           <span className="sr-only">, {idx}</span>
                         </div>
-                      </Link>
+                      </div>
                     )}
                     <div
                       className="text-indigo-600 hover:text-indigo-900 hover:cursor-pointer"
