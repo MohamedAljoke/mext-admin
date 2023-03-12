@@ -1,8 +1,18 @@
-import { ChapterSchemaType } from '@/App/Schema/Chapter.Schema';
+import {
+  ChapterSchemaType,
+  EditChapterSchema,
+  EditChapterSchemaType,
+} from '@/App/Schema/Chapter.Schema';
 import CustomModal from '@/App/components/Modal/Modal';
 import Table from '@/App/components/Table/Table';
 import React, { useState } from 'react';
 import DeleteElement from '@/App/components/DeleteContainer/DeleteContainer';
+import EditElement from '@/App/components/EditElement/EditElement';
+import { SubmitHandler } from 'react-hook-form';
+import { updateChapter } from '@/App/Services/Chapters';
+import { popSucess } from '@/App/components/PopUp/popSuccess';
+import { popError } from '@/App/components/PopUp/popError';
+import { EditSubjectSchema } from '@/App/Schema/Subject.Schema';
 
 export default function Chapters({
   chapters,
@@ -39,10 +49,42 @@ export default function Chapters({
   const closeEditModal = () => {
     setOpenEdit(false);
   };
+  //edit
+  const onSubmit: SubmitHandler<EditChapterSchemaType> = async (data) => {
+    if (!choosenChapter) {
+      throw Error('no chapter');
+    }
+    try {
+      const response = await updateChapter({
+        chapter: { ...choosenChapter, ...data },
+      });
+      setUpdatedChapter({
+        ...choosenChapter,
+        chapter_name: response.chapter_name,
+      });
+      popSucess('Chapter Updated');
+      closeEditModal();
+    } catch (e) {
+      console.log(e);
+      popError('try again later');
+    }
+  };
   return (
     <div>
       <CustomModal isOpen={openEdit} closeModal={closeEditModal}>
-        <>oi</>
+        <EditElement<EditChapterSchemaType, typeof EditChapterSchema>
+          items={[
+            {
+              name: 'chapter_name',
+              placeholder: 'Chapter',
+              label: 'Chapter',
+            },
+          ]}
+          onSubmit={onSubmit}
+          choosenElement={choosenChapter as any}
+          closeModal={closeEditModal}
+          itemSchema={EditChapterSchema}
+        />
       </CustomModal>
       <CustomModal isOpen={openDelete} closeModal={closeDeleteModal}>
         <DeleteElement<ChapterSchemaType>

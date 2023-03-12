@@ -17,3 +17,9 @@ export const CreateChapterSchema = object({
   chapterName: string(),
 });
 export type CreateChapterSchemaType = TypeOf<typeof CreateChapterSchema>;
+
+export const EditChapterSchema = object({
+  subjectId: number(),
+  chapterName: string(),
+});
+export type EditChapterSchemaType = TypeOf<typeof EditChapterSchema>;

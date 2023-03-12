@@ -54,7 +54,7 @@ export default function EditElement<T extends FieldValues, P extends ZodType>({
               <CustomInput
                 isRequired={true}
                 register={register}
-                defaultValue={choosenElement?.subject_name}
+                defaultValue={choosenElement ? choosenElement[item.name] : ''}
                 name={item.name}
                 type="text"
                 label={item.label}

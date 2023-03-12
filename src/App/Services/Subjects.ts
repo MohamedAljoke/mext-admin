@@ -31,6 +31,7 @@ export const updateSubject = async ({
   });
   return response as SubjectSchemaType;
 };
+
 export const deleteSubject = async (subjectId: number) => {
   const response = await deleteRequest({
     url: `/subjects/${subjectId}`,

@@ -5,6 +5,7 @@ import {
   CreateChapterSchemaType,
 } from '../Schema/Chapter.Schema';
 import { post } from './base';
+import put from './base/put';
 
 export const fetchChaptersList = async ({
   token,
@@ -40,4 +41,17 @@ export const createChapter = async (chapter: CreateChapterSchemaType) => {
     body: chapter,
   });
   return response as CreateChapterSchemaType;
+};
+
+export const updateChapter = async ({
+  chapter,
+}: {
+  chapter: ChapterSchemaType;
+}): Promise<ChapterSchemaType> => {
+  console.log(chapter);
+  const response = await put({
+    url: `/chapters`,
+    body: chapter,
+  });
+  return response as ChapterSchemaType;
 };
