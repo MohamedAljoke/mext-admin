@@ -1,9 +1,6 @@
 import Chapters from '@/App/Pages/Chapters/Chapters';
-import Lectuers from '@/App/Pages/Lectuers/Lectuers';
 import { ChapterSchemaType } from '@/App/Schema/Chapter.Schema';
-import { LectuerSchemaType } from '@/App/Schema/Lectuer.Schema';
 import { fetchChaptersList } from '@/App/Services/Chapters';
-import { fetchLectuersList } from '@/App/Services/Lectuers';
 import PrivateRoute from '@/App/hook/PrivateRoute';
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
 import React from 'react';

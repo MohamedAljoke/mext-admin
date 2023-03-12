@@ -1,7 +1,3 @@
-import {
-  CreateSubjectSchema,
-  CreateSubjectSchemaType,
-} from '@/App/Schema/Subject.Schema';
 import CustomButton from '@/App/Shared/common/Button/Button';
 import CustomInput from '@/App/Shared/common/Input/Input';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -26,7 +22,6 @@ export default function CreateElement<
   } = useForm<T>({
     resolver: zodResolver(itemSchema),
   });
-
   return (
     <div className="mt-8 ml-2 flow-root">
       <div className="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">
@@ -40,8 +35,10 @@ export default function CreateElement<
                     register={register}
                     name={item.name}
                     type="text"
+                    defaultValue={item.defaultValue}
                     label={item.label}
                     placeholder={item.placeholder}
+                    readOnly={item.disabled ? item.disabled : false}
                   />
                   <p
                     className="mt-2 text-xs text-red-600"

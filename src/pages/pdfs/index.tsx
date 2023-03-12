@@ -35,7 +35,6 @@ export default function PdfsPage({
   pdfs,
   error,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
-  console.log(pdfs);
   return (
     <PrivateRoute>
       <>{pdfs && pdfs?.length > 0 ? <Pdfs pdfs={pdfs} /> : null}</>

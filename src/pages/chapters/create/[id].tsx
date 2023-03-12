@@ -13,6 +13,8 @@ import { SubmitHandler } from 'react-hook-form';
 
 export default function CreatePage() {
   const router = useRouter();
+  const id = router.query.id as string;
+
   const onSubmit: SubmitHandler<CreateChapterSchemaType> = async (data) => {
     try {
       await createChapter(data);
@@ -27,7 +29,14 @@ export default function CreatePage() {
       <>
         <CreateElement<CreateChapterSchemaType, typeof CreateChapterSchema>
           itemType={[
-            { label: 'Subject', name: 'subjectName', placeholder: 'subject' },
+            { label: 'Chapter', name: 'chapterName', placeholder: 'chapter' },
+            {
+              label: 'SubjectId',
+              name: 'subjectId',
+              placeholder: 'subjectId',
+              defaultValue: id,
+              disabled: true,
+            },
           ]}
           itemSchema={CreateChapterSchema}
           onSubmit={onSubmit}

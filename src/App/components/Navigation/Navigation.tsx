@@ -248,7 +248,7 @@ export default function Navigation({ user, children }: Props) {
         <main className="flex-1 ">
           <div className="py-6 lg:ml-60 px-16">
             <>
-              {router.pathname === currentNavigationTab?.create ? (
+              {router.pathname === currentNavigationTab?.create && (
                 <div className="flex items-center">
                   <CustomButton
                     color="bg-[#6EB5D6]"
@@ -263,21 +263,6 @@ export default function Navigation({ user, children }: Props) {
                   <h1 className="ml-8 text-2xl text-center font-semibold text-gray-900">
                     Create Element
                   </h1>
-                </div>
-              ) : (
-                <div className="flex justify-between">
-                  {currentNavigationTab && (
-                    <>
-                      <h1 className="text-2xl font-semibold text-gray-900">
-                        {currentNavigationTab?.name}
-                      </h1>
-                      <Link href={currentNavigationTab.create}>
-                        <CustomButton isSubmit={false}>
-                          {currentNavigationTab?.addButtonText}
-                        </CustomButton>
-                      </Link>
-                    </>
-                  )}
                 </div>
               )}
             </>

@@ -13,13 +13,13 @@ export const ChapterSchema = object({
 export type ChapterSchemaType = TypeOf<typeof ChapterSchema>;
 
 export const CreateChapterSchema = object({
-  subjectId: number(),
+  subjectId: string(),
   chapterName: string(),
 });
 export type CreateChapterSchemaType = TypeOf<typeof CreateChapterSchema>;
 
 export const EditChapterSchema = object({
-  subjectId: number(),
+  subjectId: string(),
   chapterName: string(),
 });
 export type EditChapterSchemaType = TypeOf<typeof EditChapterSchema>;

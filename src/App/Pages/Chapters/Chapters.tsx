@@ -9,15 +9,18 @@ import React, { useState } from 'react';
 import DeleteElement from '@/App/components/DeleteContainer/DeleteContainer';
 import EditElement from '@/App/components/EditElement/EditElement';
 import { SubmitHandler } from 'react-hook-form';
-import { updateChapter } from '@/App/Services/Chapters';
+import { deleteChapter, updateChapter } from '@/App/Services/Chapters';
 import { popSucess } from '@/App/components/PopUp/popSuccess';
 import { popError } from '@/App/components/PopUp/popError';
-import { EditSubjectSchema } from '@/App/Schema/Subject.Schema';
+import Link from 'next/link';
+import CustomButton from '@/App/Shared/common/Button/Button';
 
 export default function Chapters({
   chapters,
+  subjectId,
 }: {
   chapters: ChapterSchemaType[];
+  subjectId?: string;
 }) {
   const [openEdit, setOpenEdit] = useState(false);
   const [openDelete, setOpenDelete] = useState(false);
@@ -35,7 +38,17 @@ export default function Chapters({
     setChoosenChapter(chapter);
     setOpenEdit(true);
   };
-  const deleteItem = (item: ChapterSchemaType) => {
+  const deleteItem = async (item: ChapterSchemaType) => {
+    try {
+      await deleteChapter(item.id);
+      popSucess('Item deleted');
+      const newSubjectList = chapterList?.filter(
+        (chapter) => chapter.id !== item.id
+      );
+      setChapterList(newSubjectList);
+    } catch (e) {
+      popError('error deleting item');
+    }
     setOpenDelete(false);
   };
 
@@ -71,6 +84,16 @@ export default function Chapters({
   };
   return (
     <div>
+      {subjectId && (
+        <div className="flex justify-between mt-8">
+          <>
+            <h1 className="text-2xl font-semibold text-gray-900">Chapters</h1>
+            <Link href={`/chapters/create/${subjectId}`}>
+              <CustomButton isSubmit={false}>Add chapter</CustomButton>
+            </Link>
+          </>
+        </div>
+      )}
       <CustomModal isOpen={openEdit} closeModal={closeEditModal}>
         <EditElement<EditChapterSchemaType, typeof EditChapterSchema>
           items={[

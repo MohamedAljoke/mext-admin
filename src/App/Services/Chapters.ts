@@ -4,7 +4,7 @@ import {
   ChapterSchemaType,
   CreateChapterSchemaType,
 } from '../Schema/Chapter.Schema';
-import { post } from './base';
+import { deleteRequest, post } from './base';
 import put from './base/put';
 
 export const fetchChaptersList = async ({
@@ -48,10 +48,16 @@ export const updateChapter = async ({
 }: {
   chapter: ChapterSchemaType;
 }): Promise<ChapterSchemaType> => {
-  console.log(chapter);
   const response = await put({
     url: `/chapters`,
     body: chapter,
   });
   return response as ChapterSchemaType;
+};
+
+export const deleteChapter = async (chapterId: number) => {
+  const response = await deleteRequest({
+    url: `/chapters/${chapterId}`,
+  });
+  return response;
 };

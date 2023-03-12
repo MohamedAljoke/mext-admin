@@ -13,6 +13,8 @@ import { SubmitHandler } from 'react-hook-form';
 import { deleteSubject, updateSubject } from '@/App/Services/Subjects';
 import { popSucess } from '@/App/components/PopUp/popSuccess';
 import { popError } from '@/App/components/PopUp/popError';
+import Link from 'next/link';
+import CustomButton from '@/App/Shared/common/Button/Button';
 
 export default function Subjects({
   subjects,
@@ -36,7 +38,6 @@ export default function Subjects({
         if (subject.id === updatedSubject.id) {
           return updatedSubject;
         } else {
-          console.log(subject);
           return subject;
         }
       });
@@ -97,6 +98,14 @@ export default function Subjects({
   };
   return (
     <div>
+      <div className="flex justify-between">
+        <>
+          <h1 className="text-2xl font-semibold text-gray-900">Subjects</h1>
+          <Link href="/subjects/create">
+            <CustomButton isSubmit={false}>Add subject</CustomButton>
+          </Link>
+        </>
+      </div>
       <CustomModal isOpen={openEdit} closeModal={closeEditModal}>
         <EditElement<EditSubjectSchemaType, typeof EditSubjectSchema>
           items={[

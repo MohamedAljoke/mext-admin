@@ -10,6 +10,7 @@ import { MdArrowBackIos } from 'react-icons/md';
 
 interface PageProps {
   chapters?: ChapterSchemaType[];
+  subjectId?: string;
   error?: string;
 }
 
@@ -25,7 +26,7 @@ export const getServerSideProps: GetServerSideProps<PageProps> = async (
       token: authToken,
       subjectId: id as string,
     });
-    return { props: { chapters: chaptersList } };
+    return { props: { chapters: chaptersList, subjectId: id as string } };
   } catch (e) {
     return { props: { error: 'error fetching data' } };
   }
@@ -33,36 +34,29 @@ export const getServerSideProps: GetServerSideProps<PageProps> = async (
 
 export default function SubjectPage({
   chapters,
+  subjectId,
   error,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const router = useRouter();
   return (
     <PrivateRoute>
       <>
-        {chapters && chapters?.length > 0 ? (
-          <>
-            <div className="flex items-center">
-              <CustomButton
-                color="bg-[#6EB5D6]"
-                onClick={() => {
-                  router.back();
-                }}
-                isSubmit={false}
-              >
-                <MdArrowBackIos />
-                back
-              </CustomButton>
-              <h1 className="ml-8 text-2xl text-center font-semibold text-gray-900">
-                Subject chapters
-              </h1>
-            </div>
-            <Chapters chapters={chapters} />
-          </>
-        ) : (
-          <h2 className="flex items-center text-center">
-            No Chapter where found
-          </h2>
-        )}
+        <div className="flex items-center">
+          <CustomButton
+            color="bg-[#6EB5D6]"
+            onClick={() => {
+              router.back();
+            }}
+            isSubmit={false}
+          >
+            <MdArrowBackIos />
+            back
+          </CustomButton>
+          <h1 className="ml-8 text-2xl text-center font-semibold text-gray-900">
+            Subject chapters
+          </h1>
+        </div>
+        <Chapters chapters={chapters!} subjectId={subjectId!} />
       </>
     </PrivateRoute>
   );
