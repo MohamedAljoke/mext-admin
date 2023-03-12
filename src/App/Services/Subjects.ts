@@ -36,6 +36,7 @@ export const deleteSubject = async (subjectId: number) => {
   const response = await deleteRequest({
     url: `/subjects/${subjectId}`,
   });
+  return response;
 };
 export const createSubject = async (subject: CreateSubjectSchemaType) => {
   const response = await post({

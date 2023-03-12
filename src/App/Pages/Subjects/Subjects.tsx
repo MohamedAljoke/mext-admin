@@ -10,7 +10,7 @@ import React, { useEffect, useState } from 'react';
 import DeleteElement from '@/App/components/DeleteContainer/DeleteContainer';
 import EditElement from '@/App/components/EditElement/EditElement';
 import { SubmitHandler } from 'react-hook-form';
-import { updateSubject } from '@/App/Services/Subjects';
+import { deleteSubject, updateSubject } from '@/App/Services/Subjects';
 import { popSucess } from '@/App/components/PopUp/popSuccess';
 import { popError } from '@/App/components/PopUp/popError';
 
@@ -32,10 +32,11 @@ export default function Subjects({
   ];
   useEffect(() => {
     if (updatedSubject && subjects) {
-      const updatedSubjects = subjects.map((subject) => {
+      const updatedSubjects = subjectList?.map((subject) => {
         if (subject.id === updatedSubject.id) {
           return updatedSubject;
         } else {
+          console.log(subject);
           return subject;
         }
       });
@@ -49,7 +50,17 @@ export default function Subjects({
     setChoosenSubject(subject);
     setOpenEdit(true);
   };
-  const deleteItem = (item: SubjectSchemaType) => {
+  const deleteItem = async (item: SubjectSchemaType) => {
+    try {
+      await deleteSubject(item.id);
+      popSucess('Item deleted');
+    } catch (e) {
+      popError('error deleting item');
+    }
+    const newSubjectList = subjectList?.filter(
+      (subject) => subject.id !== item.id
+    );
+    setSubjectList(newSubjectList);
     setOpenDelete(false);
   };
 
@@ -77,6 +88,7 @@ export default function Subjects({
         subject_name: response.subject_name,
       });
       popSucess('Subject Updated');
+
       closeEditModal();
     } catch (e) {
       console.log(e);
