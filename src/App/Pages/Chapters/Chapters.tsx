@@ -37,7 +37,6 @@ export default function Chapters({
   useEffect(() => {
     if (updatedChapter && chapters) {
       const updatedChapters = chapterList?.map((chapter) => {
-        console.log('oi');
         if (chapter.id === updatedChapter.id) {
           return updatedChapter;
         } else {

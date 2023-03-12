@@ -16,3 +16,15 @@ export const LectuerSchema = object({
 });
 
 export type LectuerSchemaType = TypeOf<typeof LectuerSchema>;
+
+export const CreateLectuerSchema = object({
+  subjectId: string(),
+  lectureName: string(),
+  pdfId: array(number()).optional(),
+});
+export type CreateLectuerSchemaType = TypeOf<typeof CreateLectuerSchema>;
+
+export const EditLectuerSchema = object({
+  chapter_name: string(),
+});
+export type EditLectuerSchemaType = TypeOf<typeof EditLectuerSchema>;
