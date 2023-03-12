@@ -5,7 +5,7 @@ import {
 } from '@/App/Schema/Chapter.Schema';
 import CustomModal from '@/App/components/Modal/Modal';
 import Table from '@/App/components/Table/Table';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import DeleteElement from '@/App/components/DeleteContainer/DeleteContainer';
 import EditElement from '@/App/components/EditElement/EditElement';
 import { SubmitHandler } from 'react-hook-form';
@@ -34,6 +34,21 @@ export default function Chapters({
     'created_at',
     'updated_at',
   ];
+  useEffect(() => {
+    if (updatedChapter && chapters) {
+      const updatedChapters = chapterList?.map((chapter) => {
+        console.log('oi');
+        if (chapter.id === updatedChapter.id) {
+          return updatedChapter;
+        } else {
+          return chapter;
+        }
+      });
+      setChapterList(updatedChapters);
+    } else {
+      setChapterList(chapters);
+    }
+  }, [chapters, updatedChapter]);
   const openEditModal = (chapter: ChapterSchemaType) => {
     setChoosenChapter(chapter);
     setOpenEdit(true);
@@ -116,14 +131,18 @@ export default function Chapters({
           closeDeleteModal={closeDeleteModal}
         />
       </CustomModal>
-      <Table<ChapterSchemaType>
-        hasDetails={true}
-        detailsLink={'/chapter/'}
-        openDeleteModal={openDeleteModal}
-        openEditModal={openEditModal}
-        tableHeader={lectuerTableHeader}
-        tableContent={chapters}
-      />
+      {chapterList ? (
+        <Table<ChapterSchemaType>
+          hasDetails={true}
+          detailsLink={'/chapter/'}
+          openDeleteModal={openDeleteModal}
+          openEditModal={openEditModal}
+          tableHeader={lectuerTableHeader}
+          tableContent={chapterList!}
+        />
+      ) : (
+        <h2>No Chapters</h2>
+      )}
     </div>
   );
 }

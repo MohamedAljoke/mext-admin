@@ -49,8 +49,8 @@ export const updateChapter = async ({
   chapter: ChapterSchemaType;
 }): Promise<ChapterSchemaType> => {
   const response = await put({
-    url: `/chapters`,
-    body: chapter,
+    url: `/chapters/${chapter.id}`,
+    body: { chapterName: chapter.chapter_name },
   });
   return response as ChapterSchemaType;
 };

@@ -55,13 +55,13 @@ export default function Subjects({
     try {
       await deleteSubject(item.id);
       popSucess('Item deleted');
+      const newSubjectList = subjectList?.filter(
+        (subject) => subject.id !== item.id
+      );
+      setSubjectList(newSubjectList);
     } catch (e) {
       popError('error deleting item');
     }
-    const newSubjectList = subjectList?.filter(
-      (subject) => subject.id !== item.id
-    );
-    setSubjectList(newSubjectList);
     setOpenDelete(false);
   };
 

@@ -43,6 +43,7 @@ export default function SubjectPage({
       <>
         <div className="flex items-center">
           <CustomButton
+            customCss="flex items-center"
             color="bg-[#6EB5D6]"
             onClick={() => {
               router.back();

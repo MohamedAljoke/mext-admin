@@ -20,7 +20,7 @@ export default function CustomButton({
       type={isSubmit ? 'submit' : 'button'}
       className={` ${
         color ? `${color} ${hoverColor}` : 'bg-darkBlue hover:bg-blue'
-      } text-white py-2 px-4 rounded-full flex items-center ${customCss} `}
+      } text-white py-2 px-4 rounded-full  ${customCss} `}
       {...rest}
     >
       {children}
