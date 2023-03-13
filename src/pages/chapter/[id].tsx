@@ -41,7 +41,7 @@ export default function ChapterPage({
   error,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const router = useRouter();
-  console.log(lectuers);
+
   return (
     <PrivateRoute>
       <>
@@ -61,7 +61,7 @@ export default function ChapterPage({
             Chapter lectuers
           </h1>
         </div>
-        {lectuers && <Lectuers lectuers={lectuers!} />}
+        {lectuers && <Lectuers lectuers={lectuers!} chapterId={chapterId} />}
       </>
     </PrivateRoute>
   );

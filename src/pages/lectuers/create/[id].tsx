@@ -1,8 +1,8 @@
 import {
-  CreateChapterSchema,
-  CreateChapterSchemaType,
-} from '@/App/Schema/Chapter.Schema';
-import { createChapter } from '@/App/Services/Chapters';
+  CreateLectuerSchema,
+  CreateLectuerSchemaType,
+} from '@/App/Schema/Lectuer.Schema';
+import { createLectuer } from '@/App/Services/Lectuers';
 import CustomButton from '@/App/Shared/common/Button/Button';
 import CreateElement from '@/App/components/CreateElement/CreateElement';
 import { popError } from '@/App/components/PopUp/popError';
@@ -17,13 +17,14 @@ export default function CreatePage() {
   const router = useRouter();
   const id = router.query.id as string;
 
-  const onSubmit: SubmitHandler<CreateChapterSchemaType> = async (data) => {
+  const onSubmit: SubmitHandler<CreateLectuerSchemaType> = async (data) => {
     try {
-      await createChapter(data);
-      popSucess('chapter created');
-      router.push('/chapters');
+      console.log(data);
+      await createLectuer(data);
+      popSucess('lectuer created');
+      router.push('/lectuers');
     } catch (e) {
-      popError('Error creating subject');
+      popError('Error creating lectuer');
     }
   };
   return (
@@ -45,18 +46,19 @@ export default function CreatePage() {
             Create Element
           </h1>
         </div>
-        <CreateElement<CreateChapterSchemaType, typeof CreateChapterSchema>
+        <CreateElement<CreateLectuerSchemaType, typeof CreateLectuerSchema>
           itemType={[
-            { label: 'Chapter', name: 'chapterName', placeholder: 'chapter' },
+            { label: 'Lectuer', name: 'lectureName', placeholder: 'lectuer' },
+            { label: 'Video', name: 'videoId', placeholder: 'video' },
             {
-              label: 'SubjectId',
-              name: 'subjectId',
-              placeholder: 'subjectId',
+              label: 'ChapterId',
+              name: 'chapterId',
+              placeholder: 'chapterId',
               defaultValue: id,
               disabled: true,
             },
           ]}
-          itemSchema={CreateChapterSchema}
+          itemSchema={CreateLectuerSchema}
           onSubmit={onSubmit}
         />
       </>

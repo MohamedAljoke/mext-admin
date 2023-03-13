@@ -51,11 +51,11 @@ const navigation: NavigationType[] = [
     details: '/chapters/:id',
   },
   {
-    addButtonText: 'Add lecture',
-    name: 'Lectures',
+    addButtonText: 'Add lectuer',
+    name: 'Lectuers',
     icon: AiFillFolderOpen,
-    href: '/lectures',
-    create: '/lectures/create',
+    href: '/lectuers',
+    create: '/lectuers/create',
   },
   {
     addButtonText: 'Add video',

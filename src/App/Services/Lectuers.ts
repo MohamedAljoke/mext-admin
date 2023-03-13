@@ -4,7 +4,7 @@ import {
   CreateLectuerSchemaType,
   LectuerSchemaType,
 } from '../Schema/Lectuer.Schema';
-import { post } from './base';
+import { deleteRequest, post } from './base';
 
 export const fetchLectuersList = async ({
   token,
@@ -20,7 +20,7 @@ export const fetchLectuersList = async ({
   return response.data as LectuerSchemaType[];
 };
 
-export const createSubject = async (lectuer: CreateLectuerSchemaType) => {
+export const createLectuer = async (lectuer: CreateLectuerSchemaType) => {
   const response = await post({
     url: `/lectuers`,
     body: lectuer,
@@ -35,13 +35,18 @@ export const fetchChapterLectuers = async ({
   token?: string;
   chapterId: string;
 }): Promise<LectuerSchemaType[]> => {
-  console.log(chapterId);
   const response = await axios.get(`${API}/lectuers/by-chapter/${chapterId}`, {
     headers: {
       'Content-Type': 'application/json',
       Authorization: 'Bearer ' + token,
     },
   });
-  console.log(response);
   return response.data as LectuerSchemaType[];
+};
+
+export const deleteLecture = async (lectureId: number) => {
+  const response = await deleteRequest({
+    url: `/lectuers/${lectureId}`,
+  });
+  return response;
 };

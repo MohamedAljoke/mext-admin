@@ -18,9 +18,10 @@ export const LectuerSchema = object({
 export type LectuerSchemaType = TypeOf<typeof LectuerSchema>;
 
 export const CreateLectuerSchema = object({
-  subjectId: string(),
+  chapterId: string(),
   lectureName: string(),
-  pdfId: array(number()).optional(),
+  pdfId: array(string()).optional(),
+  videoId: string().optional(),
 });
 export type CreateLectuerSchemaType = TypeOf<typeof CreateLectuerSchema>;
 
