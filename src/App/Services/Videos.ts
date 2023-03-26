@@ -1,7 +1,8 @@
 import axios from 'axios';
 import { API } from './base/axios';
 import { CreateVideoSchemaType, VideoSchemaType } from '../Schema/Video.Schema';
-import { post } from './base';
+import { deleteRequest, post } from './base';
+import put from './base/put';
 
 export const fetchVideosList = async ({
   token,
@@ -23,4 +24,23 @@ export const createVideo = async (subject: CreateVideoSchemaType) => {
     body: subject,
   });
   return response as CreateVideoSchemaType;
+};
+
+export const updateVideo = async ({
+  video,
+}: {
+  video: VideoSchemaType;
+}): Promise<VideoSchemaType> => {
+  const response = await put({
+    url: `/videos/${video.id}`,
+    body: { videoName: video.video_name, videoUrl: video.video_url },
+  });
+  return response as VideoSchemaType;
+};
+
+export const deleteVideo = async (videoId: number) => {
+  const response = await deleteRequest({
+    url: `/videos/${videoId}`,
+  });
+  return response;
 };

@@ -16,3 +16,9 @@ export const CreateVideoSchema = object({
   typesId: array(number()).optional(),
 });
 export type CreateVideoSchemaType = TypeOf<typeof CreateVideoSchema>;
+
+export const EditVideoSchema = object({
+  video_name: string(),
+  video_url: string(),
+});
+export type EditVideoSchemaType = TypeOf<typeof EditVideoSchema>;
