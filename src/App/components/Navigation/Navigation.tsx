@@ -16,6 +16,7 @@ import Link from 'next/link';
 import { IconType } from 'react-icons/lib';
 import { useRouter } from 'next/router';
 import CustomButton from '@/App/Shared/common/Button/Button';
+import { FiType } from 'react-icons/fi';
 
 type NavigationType = {
   name: string;
@@ -77,6 +78,13 @@ const navigation: NavigationType[] = [
     icon: AiFillQuestionCircle,
     href: '/questions',
     create: '/questions/create',
+  },
+  {
+    addButtonText: 'Add type',
+    name: 'Types',
+    icon: FiType,
+    href: '/types',
+    create: '/types/create',
   },
 ];
 
