@@ -93,12 +93,10 @@ export default function Types({ types }: { types: TypeSchemaType[] }) {
   return (
     <div>
       <div className="flex justify-between">
-        <>
-          <h1 className="text-2xl font-semibold text-gray-900">Types</h1>
-          <Link href="/types/create">
-            <CustomButton isSubmit={false}>Add subject</CustomButton>
-          </Link>
-        </>
+        <h1 className="text-2xl font-semibold text-gray-900">Types</h1>
+        <Link href="/types/create">
+          <CustomButton isSubmit={false}>Add type</CustomButton>
+        </Link>
       </div>
       <CustomModal isOpen={openEdit} closeModal={closeEditModal}>
         <EditElement<EditTypeSchemaType, typeof EditTypeSchema>

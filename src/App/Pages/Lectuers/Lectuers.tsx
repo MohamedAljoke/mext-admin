@@ -138,7 +138,7 @@ export default function Lectuers({
       {lectuerList ? (
         <Table
           hasDetails={true}
-          detailsLink={'/lectuer/'}
+          detailsLink={'/lecture/'}
           openDeleteModal={openDeleteModal}
           openEditModal={openEditModal}
           tableHeader={lectuerTableHeader}

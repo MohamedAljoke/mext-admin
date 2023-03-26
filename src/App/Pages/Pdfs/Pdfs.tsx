@@ -96,7 +96,7 @@ export default function Pdfs({ pdfs }: { pdfs: PdfSchemaType[] }) {
         <>
           <h1 className="text-2xl font-semibold text-gray-900">Pdfs</h1>
           <Link href="/pdfs/create">
-            <CustomButton isSubmit={false}>Add video</CustomButton>
+            <CustomButton isSubmit={false}>Add pdf</CustomButton>
           </Link>
         </>
       </div>

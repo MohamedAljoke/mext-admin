@@ -63,3 +63,18 @@ export const updateLecture = async ({
   });
   return response as LectuerSchemaType;
 };
+export const fetchLectureContent = async ({
+  token,
+  lectureId,
+}: {
+  token?: string;
+  lectureId: string;
+}): Promise<LectuerSchemaType> => {
+  const response = await axios.get(`${API}/lectuers/${lectureId}`, {
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: 'Bearer ' + token,
+    },
+  });
+  return response.data as LectuerSchemaType;
+};

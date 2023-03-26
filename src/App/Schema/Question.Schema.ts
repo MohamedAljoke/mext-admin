@@ -1,8 +1,7 @@
 import { object, number, string, TypeOf, date, boolean, array } from 'zod';
-import {
-  AlternativesNoResponseSchema,
-  AlternativesSchema,
-} from './Alternatives.Schema';
+import { AlternativesNoResponseSchema } from './Alternatives.Schema';
+import { LectuerSchema } from './Lectuer.Schema';
+import { TypeSchema } from './Types.schema';
 
 export const QuestionSchema = object({
   id: number(),
@@ -21,3 +20,14 @@ export const AnswerQuestionSchema = object({
   answerId: number(),
 });
 export type AnswerQuestionSchemaType = TypeOf<typeof AnswerQuestionSchema>;
+
+export const GetQuestionSchema = object({
+  id: number(),
+  question_text: string(),
+  alternatives: array(AlternativesNoResponseSchema),
+  types: array(TypeSchema),
+  // lectuers: array(LectuerSchema),
+  created_at: date(),
+  updated_at: date(),
+});
+export type GetQuestionSchemaType = TypeOf<typeof GetQuestionSchema>;
