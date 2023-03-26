@@ -26,6 +26,6 @@ export const CreateLectuerSchema = object({
 export type CreateLectuerSchemaType = TypeOf<typeof CreateLectuerSchema>;
 
 export const EditLectuerSchema = object({
-  chapter_name: string(),
+  lecture_name: string(),
 });
 export type EditLectuerSchemaType = TypeOf<typeof EditLectuerSchema>;

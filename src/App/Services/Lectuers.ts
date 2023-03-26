@@ -5,6 +5,7 @@ import {
   LectuerSchemaType,
 } from '../Schema/Lectuer.Schema';
 import { deleteRequest, post } from './base';
+import put from './base/put';
 
 export const fetchLectuersList = async ({
   token,
@@ -49,4 +50,16 @@ export const deleteLecture = async (lectureId: number) => {
     url: `/lectuers/${lectureId}`,
   });
   return response;
+};
+
+export const updateLecture = async ({
+  lecture,
+}: {
+  lecture: LectuerSchemaType;
+}): Promise<LectuerSchemaType> => {
+  const response = await put({
+    url: `/lectuers/${lecture.id}`,
+    body: { lectureName: lecture.lecture_name },
+  });
+  return response as LectuerSchemaType;
 };

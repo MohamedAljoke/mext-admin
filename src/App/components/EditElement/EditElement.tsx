@@ -42,7 +42,7 @@ export default function EditElement<T extends FieldValues, P extends ZodType>({
         as="h3"
         className="text-lg font-medium leading-6 text-gray-900 text-center"
       >
-        Editing Subject {choosenElement?.id}
+        Editing elemment {choosenElement?.id}
       </Dialog.Title>
       <form
         onSubmit={handleSubmit(onSubmit)}

@@ -8,7 +8,7 @@ import {
   LectuerSchema,
   LectuerSchemaType,
 } from '@/App/Schema/Lectuer.Schema';
-import { deleteLecture } from '@/App/Services/Lectuers';
+import { deleteLecture, updateLecture } from '@/App/Services/Lectuers';
 import CustomButton from '@/App/Shared/common/Button/Button';
 import DeleteElement from '@/App/components/DeleteContainer/DeleteContainer';
 import EditElement from '@/App/components/EditElement/EditElement';
@@ -87,14 +87,14 @@ export default function Lectuers({
       throw Error('no lectuer');
     }
     try {
-      // const response = await updateChapter({
-      //   chapter: { ...choosenChapter, ...data },
-      // });
-      // setUpdatedChapter({
-      //   ...choosenChapter,
-      //   chapter_name: response.chapter_name,
-      // });
-      popSucess('Chapter Updated');
+      const response = await updateLecture({
+        lecture: { ...choosenLectuer, ...data },
+      });
+      setUpdatedLectuer({
+        ...choosenLectuer,
+        lecture_name: response.lecture_name,
+      });
+      popSucess('Lecture Updated');
       closeEditModal();
     } catch (e) {
       console.log(e);
@@ -117,15 +117,15 @@ export default function Lectuers({
         <EditElement<EditLectuerSchemaType, typeof EditLectuerSchema>
           items={[
             {
-              name: 'chapter_name',
-              placeholder: 'Chapter',
-              label: 'Chapter',
+              name: 'lecture_name',
+              placeholder: 'Lecture',
+              label: 'Lecture',
             },
           ]}
           onSubmit={onSubmit}
           choosenElement={choosenLectuer as any}
           closeModal={closeEditModal}
-          itemSchema={EditChapterSchema}
+          itemSchema={EditLectuerSchema}
         />
       </CustomModal>
       <CustomModal isOpen={openDelete} closeModal={closeDeleteModal}>
