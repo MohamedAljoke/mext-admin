@@ -9,3 +9,10 @@ export const VideoSchema = object({
 });
 
 export type VideoSchemaType = TypeOf<typeof VideoSchema>;
+
+export const CreateVideoSchema = object({
+  videoName: string(),
+  videoUrl: string(),
+  typesId: array(number()).optional(),
+});
+export type CreateVideoSchemaType = TypeOf<typeof CreateVideoSchema>;

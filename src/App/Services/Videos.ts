@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { API } from './base/axios';
-import { VideoSchemaType } from '../Schema/Video.Schema';
+import { CreateVideoSchemaType, VideoSchemaType } from '../Schema/Video.Schema';
+import { post } from './base';
 
 export const fetchVideosList = async ({
   token,
@@ -14,4 +15,12 @@ export const fetchVideosList = async ({
     },
   });
   return response.data as VideoSchemaType[];
+};
+
+export const createVideo = async (subject: CreateVideoSchemaType) => {
+  const response = await post({
+    url: `/videos`,
+    body: subject,
+  });
+  return response as CreateVideoSchemaType;
 };
