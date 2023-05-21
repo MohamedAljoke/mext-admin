@@ -19,7 +19,6 @@ export default function CreatePage() {
 
   const onSubmit: SubmitHandler<CreateLectuerSchemaType> = async (data) => {
     try {
-      console.log(data);
       await createLectuer(data);
       popSucess('lectuer created');
       router.push('/lectuers');
