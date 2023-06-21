@@ -15,7 +15,7 @@ import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
 import { SubmitHandler } from 'react-hook-form';
 
-export default function Pdfs({ pdfs }: { pdfs: PdfSchemaType[] | undefined }) {
+export default function Pdfs({ pdfs, lectureId }: { pdfs: PdfSchemaType[] | undefined, lectureId?: string }) {
   const [openEdit, setOpenEdit] = useState(false);
   const [choosenPdf, setChoosenPdf] = useState<PdfSchemaType>();
   const [openDelete, setOpenDelete] = useState(false);
@@ -69,6 +69,7 @@ export default function Pdfs({ pdfs }: { pdfs: PdfSchemaType[] | undefined }) {
       throw Error('no pdf');
     }
     try {
+
       const response = await updatePdf({
         pdf: { ...choosenPdf, ...data },
       });

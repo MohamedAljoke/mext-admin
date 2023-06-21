@@ -63,13 +63,12 @@ export default function LecturePage({
           </h1>
         </div>
         <div className="mt-16">
-          <Pdfs pdfs={lecture?.pdfs} />
+          <Pdfs pdfs={lecture?.pdfs} lectureId={lectureId} />
         </div>
         <div className="mt-32">
           <Questions questions={lecture?.questions} canCreate={true} lectureId={lectureId} />
         </div>
 
-        {/* {lectures && <Lectuers lectuers={lectures} />} */}
       </>
     </PrivateRoute>
   );

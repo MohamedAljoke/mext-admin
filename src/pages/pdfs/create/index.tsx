@@ -13,7 +13,9 @@ export default function CreatePage() {
   const router = useRouter();
   const onSubmit: SubmitHandler<CreatePdfSchemaType> = async (data) => {
     try {
-      await createPdf(data);
+      await createPdf({
+        ...data
+      });
       popSucess('pdf created');
       router.push('/pdfs');
     } catch (e) {
