@@ -96,7 +96,7 @@ export default function Pdfs({ pdfs, lectureId }: { pdfs: PdfSchemaType[] | unde
       <div className="flex justify-between">
         <>
           <h1 className="text-2xl font-semibold text-gray-900">Pdfs</h1>
-          <Link href="/pdfs/create">
+          <Link href={`/pdfs/create/${lectureId ? lectureId : ''}`}>
             <CustomButton isSubmit={false}>Add pdf</CustomButton>
           </Link>
         </>

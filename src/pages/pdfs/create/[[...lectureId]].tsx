@@ -11,9 +11,12 @@ import { SubmitHandler } from 'react-hook-form';
 
 export default function CreatePage() {
   const router = useRouter();
+  const lectureId: number = Number(router.query.lectureId);
+
   const onSubmit: SubmitHandler<CreatePdfSchemaType> = async (data) => {
     try {
       await createPdf({
+        ...(lectureId ? { lectureId } : {}),
         ...data
       });
       popSucess('pdf created');

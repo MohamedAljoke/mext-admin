@@ -11,7 +11,7 @@ export const PdfSchema = object({
 export type PdfSchemaType = TypeOf<typeof PdfSchema>;
 
 export const CreatePdfSchema = object({
-  lectureId: string().optional(),
+  lectureId: number().optional(),
   pdfName: string(),
   pdfUrl: string(),
   typesId: array(number()).optional(),
