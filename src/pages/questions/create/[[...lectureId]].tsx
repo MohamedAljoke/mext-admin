@@ -5,14 +5,40 @@ import { popError } from '@/App/components/PopUp/popError';
 import { popSucess } from '@/App/components/PopUp/popSuccess';
 import PrivateRoute from '@/App/hook/PrivateRoute';
 import { useRouter } from 'next/router';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { SubmitHandler } from 'react-hook-form';
 import CustomButton from '@/App/Shared/common/Button/Button';
 import { HiOutlineTrash } from 'react-icons/hi';
-import { createSubject } from '@/App/Services/Subjects';
 import { createQuestion } from '@/App/Services/Questions';
+import { TypeSchemaType } from '@/App/Schema/Types.schema';
+import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
+import { fetchTypesList } from '@/App/Services/Type';
+import CustomSelect, { SelectOption } from '@/App/components/Select';
 
-export default function CreatePage() {
+
+interface PageProps {
+  types?: TypeSchemaType[];
+  error?: string;
+}
+export const getServerSideProps: GetServerSideProps<PageProps> = async (
+  context
+) => {
+  const { req } = context;
+  const cookies = req.cookies;
+  const authToken = cookies['auth-token'];
+  try {
+    const typesList: TypeSchemaType[] = await fetchTypesList({
+      token: authToken,
+    });
+    return { props: { types: typesList } };
+  } catch (e) {
+    return { props: { error: 'error fetching data' } };
+  }
+};
+export default function CreatePage({
+  types,
+  error,
+}: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const router = useRouter();
   const lectureId: number = Number(router.query.lectureId);
   const [alternatives, setAlternatives] = useState<{ id: string, text: string, isCorrect: boolean }[]>(
@@ -23,6 +49,19 @@ export default function CreatePage() {
         isCorrect: false
       },
     ])
+  const [typesOptions, setTypesOptions] = useState<SelectOption[]>([])
+  const [typesListSelected, setTypesListSelected] = useState<SelectOption[]>([])
+  useEffect(() => {
+    if (types?.length) {
+      const typesFormatted = types.map(type => {
+        return {
+          label: type.type_name,
+          value: type.id
+        }
+      })
+      setTypesOptions(typesFormatted)
+    }
+  }, [types])
   const addAlternative = () => {
     setAlternatives(prev => {
       return [
@@ -70,6 +109,9 @@ export default function CreatePage() {
   }
   const onSubmit: SubmitHandler<CreateQuestionSchemaType> = async (data) => {
     try {
+      const typesIds = typesListSelected.map(type => {
+        return type.value as number
+      })
       const answers = alternatives.map(alternative => {
         return {
           alternativeText: alternative.text,
@@ -77,6 +119,7 @@ export default function CreatePage() {
         }
       })
       const submitData: CreateQuestionSchemaSubmitType = {
+        ...(typesIds.length ? { typesId: typesIds } : {}),
         ...(lectureId ? { lectureId: [lectureId] } : {}),
         questionText: data.questionText,
         alternatives: answers
@@ -98,6 +141,18 @@ export default function CreatePage() {
           itemSchema={CreateQuestionSchema}
           onSubmit={onSubmit}
           children={<>
+            <div className='mt-3'>
+              <CustomSelect isMulti={true} options={typesOptions}
+                values={typesListSelected}
+                handleChange={(newValue) => {
+                  setTypesListSelected(prev => {
+                    return [
+                      ...newValue
+                    ]
+                  })
+                }}
+              />
+            </div>
             <p
               className="block text-sm font-medium text-gray-700"
             >
@@ -129,6 +184,7 @@ export default function CreatePage() {
             <CustomButton customCss="w-[100%] mt-8 ml-auto bg-[#003370]" onClick={addAlternative} >
               Add alternative
             </CustomButton>
+
           </>}
         />
 
