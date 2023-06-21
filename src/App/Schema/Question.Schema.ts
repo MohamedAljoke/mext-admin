@@ -30,4 +30,24 @@ export const GetQuestionSchema = object({
   created_at: date(),
   updated_at: date(),
 });
+
 export type GetQuestionSchemaType = TypeOf<typeof GetQuestionSchema>;
+
+export const CreateQuestionSchema = object({
+  questionText: string(),
+});
+export type CreateQuestionSchemaType = TypeOf<typeof CreateQuestionSchema>;
+
+export const CreateQuestionSubmitSchema = object({
+  lectureId: array(number()),
+  questionText: string(),
+  alternatives: array(
+    object({
+      alternativeText: string(),
+      isCorrect: boolean(),
+    })
+  ),
+});
+export type CreateQuestionSchemaSubmitType = TypeOf<
+  typeof CreateQuestionSubmitSchema
+>;

@@ -6,8 +6,12 @@ import React, { useState } from 'react';
 
 export default function Questions({
   questions,
+  canCreate,
+  lectureId
 }: {
   questions: QuestionSchemaType[];
+  canCreate?: boolean
+  lectureId?: string
 }) {
   const [openEdit, setOpenEdit] = useState(false);
   const [choosenQuestion, setChoosenQuestion] = useState<QuestionSchemaType>();
@@ -24,9 +28,12 @@ export default function Questions({
     <div>
       <div className="flex justify-between">
         <h1 className="text-2xl font-semibold text-gray-900">Questions</h1>
-        <Link href="/questions/create">
-          <CustomButton isSubmit={false}>Add question</CustomButton>
-        </Link>
+        {
+          canCreate ?
+            <Link href={`/questions/create/${lectureId}`}>
+              <CustomButton isSubmit={false}>Add question</CustomButton>
+            </Link> : null
+        }
       </div>
       <Table<QuestionSchemaType>
         tableHeader={questionsTableHeader}

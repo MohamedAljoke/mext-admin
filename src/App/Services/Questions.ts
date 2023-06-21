@@ -1,6 +1,10 @@
 import axios from 'axios';
 import { API } from './base/axios';
-import { QuestionSchemaType } from '../Schema/Question.Schema';
+import {
+  CreateQuestionSchemaSubmitType,
+  QuestionSchemaType,
+} from '../Schema/Question.Schema';
+import { post } from './base';
 
 export const fetchQuestionsList = async ({
   token,
@@ -14,4 +18,13 @@ export const fetchQuestionsList = async ({
     },
   });
   return response.data as QuestionSchemaType[];
+};
+export const createQuestion = async (
+  question: CreateQuestionSchemaSubmitType
+) => {
+  const response = await post({
+    url: `/questions`,
+    body: question,
+  });
+  return response as CreateQuestionSchemaSubmitType;
 };

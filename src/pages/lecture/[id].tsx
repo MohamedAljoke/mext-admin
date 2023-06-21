@@ -69,7 +69,7 @@ export default function LecturePage({
         </>
         <div className="mt-32">
           {lecture?.questions && lecture?.questions?.length > 0 ? (
-            <Questions questions={lecture?.questions} />
+            <Questions questions={lecture?.questions} canCreate={true} lectureId={lectureId} />
           ) : null}
         </div>
 

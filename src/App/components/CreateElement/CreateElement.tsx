@@ -9,12 +9,14 @@ interface ICreateProps<T extends FieldValues, P extends ZodType> {
   itemType: any[];
   itemSchema: P;
   onSubmit: SubmitHandler<T>;
+  children?: JSX.Element
 }
 
 export default function CreateElement<
   T extends FieldValues,
-  P extends ZodType
->({ itemType, itemSchema, onSubmit }: ICreateProps<T, P>) {
+  P extends ZodType,
+
+>({ itemType, itemSchema, onSubmit, children }: ICreateProps<T, P>) {
   const {
     register,
     handleSubmit,
@@ -48,13 +50,14 @@ export default function CreateElement<
                 </div>
               );
             })}
-
+            {children}
+            <br />
             <CustomButton customCss="mt-8" isSubmit={true}>
               Create
             </CustomButton>
           </form>
         </div>
       </div>
-    </div>
+    </div >
   );
 }

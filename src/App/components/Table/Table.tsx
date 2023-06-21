@@ -26,6 +26,7 @@ export default function Table<T extends { id: number }>({
   showEdit = true,
 }: TableProps<T>) {
   const router = useRouter();
+
   return (
     <div className="mt-8 flow-root">
       <div className="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">
@@ -84,7 +85,7 @@ export default function Table<T extends { id: number }>({
                     {hasDetails && detailsLink && (
                       <div
                         onClick={() =>
-                          router.push(`${detailsLink}/${contentItem.id}`)
+                          router.push(`${detailsLink}${contentItem.id}`)
                         }
                         className="text-indigo-600 hover:text-indigo-900 hover:cursor-pointer"
                       >
