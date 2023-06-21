@@ -7,7 +7,7 @@ import { popError } from '@/App/components/PopUp/popError';
 import { popSucess } from '@/App/components/PopUp/popSuccess';
 import Table from '@/App/components/Table/Table';
 import Link from 'next/link';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 export default function Questions({
   questions,
@@ -22,10 +22,25 @@ export default function Questions({
   const [openDelete, setOpenDelete] = useState(false);
   const [choosenQuestion, setChoosenQuestion] = useState<QuestionSchemaType>();
   const [questionsList, setQuestionsList] = useState<QuestionSchemaType[]>();
+  const [upateQuestion, setUpdateQuestion] = useState<QuestionSchemaType>();
   const questionsTableHeader: (keyof QuestionSchemaType)[] = [
     'id',
     'question_text',
   ];
+  useEffect(() => {
+    if (upateQuestion && questions) {
+      const updateQuestion = questionsList?.map((pdf) => {
+        if (pdf.id === upateQuestion.id) {
+          return upateQuestion;
+        } else {
+          return pdf;
+        }
+      });
+      setQuestionsList(updateQuestion);
+    } else {
+      setQuestionsList(questions);
+    }
+  }, [questions, upateQuestion]);
   //modals
   const openDeleteModal = (subject: QuestionSchemaType) => {
     setChoosenQuestion(subject);
@@ -43,6 +58,7 @@ export default function Questions({
       await deleteQuestion(item.id);
       popSucess('Question deleted');
       const newPdfList = questionsList?.filter((question) => question.id !== item.id);
+      console.log(newPdfList)
       setQuestionsList(newPdfList);
     } catch (e) {
       popError('error deleting item');
@@ -68,11 +84,11 @@ export default function Questions({
         }
       </div>
       {
-        questions?.length ?
+        questionsList?.length ?
           <Table<QuestionSchemaType>
             openDeleteModal={openDeleteModal}
             tableHeader={questionsTableHeader}
-            tableContent={questions}
+            tableContent={questionsList}
             openEditModal={openEditModal}
           /> : null
       }

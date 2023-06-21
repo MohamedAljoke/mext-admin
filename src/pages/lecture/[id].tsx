@@ -62,15 +62,11 @@ export default function LecturePage({
             Lecture elements
           </h1>
         </div>
-        <>
-          {lecture?.pdfs && lecture?.pdfs?.length > 0 ? (
-            <Pdfs pdfs={lecture?.pdfs} />
-          ) : null}
-        </>
+        <div className="mt-16">
+          <Pdfs pdfs={lecture?.pdfs} />
+        </div>
         <div className="mt-32">
-          {lecture?.questions && lecture?.questions?.length > 0 ? (
-            <Questions questions={lecture?.questions} canCreate={true} lectureId={lectureId} />
-          ) : null}
+          <Questions questions={lecture?.questions} canCreate={true} lectureId={lectureId} />
         </div>
 
         {/* {lectures && <Lectuers lectuers={lectures} />} */}
