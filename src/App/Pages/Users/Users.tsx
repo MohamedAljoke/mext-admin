@@ -6,7 +6,7 @@ import React, { useEffect, useState } from 'react';
 import EditUser from './EditUser/EditUser';
 import DeleteUser from './DeleteUser/DeleteUser';
 
-export default function Users({ users }: { users: UserSchemaType[] }) {
+export default function Users({ users }: { users: UserSchemaType[] | undefined }) {
   const [openEdit, setOpenEdit] = useState(false);
   const [usersList, setUsersList] = useState<UserSchemaType[]>();
   const [choosenUser, setChoosenUser] = useState<UserSchemaType>();

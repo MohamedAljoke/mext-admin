@@ -37,7 +37,7 @@ export default function PdfsPage({
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   return (
     <PrivateRoute>
-      <>{pdfs && pdfs?.length > 0 ? <Pdfs pdfs={pdfs} /> : null}</>
+      <Pdfs pdfs={pdfs} />
     </PrivateRoute>
   );
 }

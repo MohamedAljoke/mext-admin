@@ -32,7 +32,7 @@ export default function TypesPage({
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   return (
     <PrivateRoute>
-      <>{types && types?.length > 0 ? <Types types={types} /> : null}</>
+      <Types types={types} />
     </PrivateRoute>
   );
 }

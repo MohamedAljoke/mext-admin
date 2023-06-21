@@ -34,9 +34,7 @@ export default function SubjectsPage({
   return (
     <PrivateRoute>
       <>
-        {subjects && subjects?.length > 0 ? (
-          <Subjects subjects={subjects} />
-        ) : null}
+        <Subjects subjects={subjects} />
       </>
     </PrivateRoute>
   );

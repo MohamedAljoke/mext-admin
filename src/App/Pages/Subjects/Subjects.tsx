@@ -19,7 +19,7 @@ import CustomButton from '@/App/Shared/common/Button/Button';
 export default function Subjects({
   subjects,
 }: {
-  subjects: SubjectSchemaType[];
+  subjects: SubjectSchemaType[] | undefined;
 }) {
   const [openEdit, setOpenEdit] = useState(false);
   const [openDelete, setOpenDelete] = useState(false);

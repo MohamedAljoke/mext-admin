@@ -14,7 +14,7 @@ export default function Questions({
   canCreate,
   lectureId
 }: {
-  questions: QuestionSchemaType[];
+  questions: QuestionSchemaType[] | undefined;
   canCreate?: boolean
   lectureId?: string
 }) {
@@ -67,12 +67,15 @@ export default function Questions({
             </Link> : null
         }
       </div>
-      <Table<QuestionSchemaType>
-        openDeleteModal={openDeleteModal}
-        tableHeader={questionsTableHeader}
-        tableContent={questions}
-        openEditModal={openEditModal}
-      />
+      {
+        questions?.length ?
+          <Table<QuestionSchemaType>
+            openDeleteModal={openDeleteModal}
+            tableHeader={questionsTableHeader}
+            tableContent={questions}
+            openEditModal={openEditModal}
+          /> : null
+      }
     </div>
   );
 }

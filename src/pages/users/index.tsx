@@ -32,7 +32,7 @@ export default function UsersPage({
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   return (
     <PrivateRoute>
-      <>{users && users?.length > 0 ? <Users users={users} /> : null}</>
+      <Users users={users} />
     </PrivateRoute>
   );
 }

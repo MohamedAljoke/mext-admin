@@ -31,11 +31,7 @@ export default function LecturesPage({
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   return (
     <PrivateRoute>
-      <>
-        {lectuers && lectuers?.length > 0 ? (
-          <Lectuers lectuers={lectuers} />
-        ) : null}
-      </>
+      <Lectuers lectuers={lectuers} />
     </PrivateRoute>
   );
 }

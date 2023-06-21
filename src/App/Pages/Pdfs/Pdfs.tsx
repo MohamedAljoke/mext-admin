@@ -15,7 +15,7 @@ import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
 import { SubmitHandler } from 'react-hook-form';
 
-export default function Pdfs({ pdfs }: { pdfs: PdfSchemaType[] }) {
+export default function Pdfs({ pdfs }: { pdfs: PdfSchemaType[] | undefined }) {
   const [openEdit, setOpenEdit] = useState(false);
   const [choosenPdf, setChoosenPdf] = useState<PdfSchemaType>();
   const [openDelete, setOpenDelete] = useState(false);

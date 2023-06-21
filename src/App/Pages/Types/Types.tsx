@@ -15,7 +15,7 @@ import {
 } from '@/App/Schema/Types.schema';
 import { deleteType, updateType } from '@/App/Services/Type';
 
-export default function Types({ types }: { types: TypeSchemaType[] }) {
+export default function Types({ types }: { types: TypeSchemaType[] | undefined }) {
   const [openEdit, setOpenEdit] = useState(false);
   const [openDelete, setOpenDelete] = useState(false);
   const [typeList, setTypeList] = useState<TypeSchemaType[]>();

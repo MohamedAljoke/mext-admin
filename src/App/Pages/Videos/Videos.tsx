@@ -16,7 +16,7 @@ import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
 import { SubmitHandler } from 'react-hook-form';
 
-export default function Videos({ videos }: { videos: VideoSchemaType[] }) {
+export default function Videos({ videos }: { videos: VideoSchemaType[] | undefined }) {
   const [openEdit, setOpenEdit] = useState(false);
   const [openDelete, setOpenDelete] = useState(false);
   const [choosenVideo, setChoosenVideo] = useState<VideoSchemaType>();

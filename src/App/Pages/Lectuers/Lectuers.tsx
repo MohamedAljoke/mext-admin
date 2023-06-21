@@ -24,7 +24,7 @@ export default function Lectuers({
   lectuers,
   chapterId,
 }: {
-  lectuers: LectuerSchemaType[];
+  lectuers: LectuerSchemaType[] | undefined;
   chapterId?: string;
 }) {
   const [openEdit, setOpenEdit] = useState(false);

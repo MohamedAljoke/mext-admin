@@ -19,7 +19,7 @@ export default function Chapters({
   chapters,
   subjectId,
 }: {
-  chapters: ChapterSchemaType[];
+  chapters: ChapterSchemaType[] | undefined;
   subjectId?: string;
 }) {
   const [openEdit, setOpenEdit] = useState(false);

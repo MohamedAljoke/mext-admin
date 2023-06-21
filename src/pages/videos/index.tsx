@@ -32,7 +32,7 @@ export default function VideosPage({
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   return (
     <PrivateRoute>
-      <>{videos && videos?.length > 0 ? <Videos videos={videos} /> : null}</>
+      <Videos videos={videos} />
     </PrivateRoute>
   );
 }

@@ -34,9 +34,7 @@ export default function QuestionsPage({
   return (
     <PrivateRoute>
       <>
-        {questions && questions?.length > 0 ? (
-          <Questions questions={questions} />
-        ) : null}
+        <Questions questions={questions} />
       </>
     </PrivateRoute>
   );

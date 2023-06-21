@@ -31,11 +31,7 @@ export default function ChaptersPage({
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   return (
     <PrivateRoute>
-      <>
-        {chapters && chapters?.length > 0 ? (
-          <Chapters chapters={chapters} />
-        ) : null}
-      </>
+      <Chapters chapters={chapters} />
     </PrivateRoute>
   );
 }
