@@ -4,7 +4,7 @@ import {
   CreateQuestionSchemaSubmitType,
   QuestionSchemaType,
 } from '../Schema/Question.Schema';
-import { post } from './base';
+import { deleteRequest, post } from './base';
 
 export const fetchQuestionsList = async ({
   token,
@@ -27,4 +27,11 @@ export const createQuestion = async (
     body: question,
   });
   return response as CreateQuestionSchemaSubmitType;
+};
+
+export const deleteQuestion = async (questionId: number) => {
+  const response = await deleteRequest({
+    url: `/questions/${questionId}`,
+  });
+  return response;
 };
