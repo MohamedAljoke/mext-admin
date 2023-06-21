@@ -22,3 +22,11 @@ export const EditVideoSchema = object({
   video_url: string(),
 });
 export type EditVideoSchemaType = TypeOf<typeof EditVideoSchema>;
+
+export const EditVideoSubmitSchema = object({
+  id: number(),
+  video_name: string(),
+  video_url: string(),
+  typesId: array(number()).optional(),
+});
+export type EditVideoSchemaSubmitType = TypeOf<typeof EditVideoSubmitSchema>;

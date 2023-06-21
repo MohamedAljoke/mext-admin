@@ -1,6 +1,10 @@
 import axios from 'axios';
 import { API } from './base/axios';
-import { CreateVideoSchemaType, VideoSchemaType } from '../Schema/Video.Schema';
+import {
+  CreateVideoSchemaType,
+  EditVideoSchemaSubmitType,
+  VideoSchemaType,
+} from '../Schema/Video.Schema';
 import { deleteRequest, post } from './base';
 import put from './base/put';
 
@@ -29,13 +33,17 @@ export const createVideo = async (subject: CreateVideoSchemaType) => {
 export const updateVideo = async ({
   video,
 }: {
-  video: VideoSchemaType;
-}): Promise<VideoSchemaType> => {
+  video: EditVideoSchemaSubmitType;
+}): Promise<EditVideoSchemaSubmitType> => {
   const response = await put({
     url: `/videos/${video.id}`,
-    body: { videoName: video.video_name, videoUrl: video.video_url },
+    body: {
+      videoName: video.video_name,
+      videoUrl: video.video_url,
+      ...(video.typesId ? { typesId: video.typesId } : {}),
+    },
   });
-  return response as VideoSchemaType;
+  return response as EditVideoSchemaSubmitType;
 };
 
 export const deleteVideo = async (videoId: number) => {

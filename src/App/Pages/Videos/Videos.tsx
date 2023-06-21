@@ -71,7 +71,8 @@ export default function Videos({ videos }: { videos: VideoSchemaType[] | undefin
     }
     try {
       const response = await updateVideo({
-        video: { ...choosenVideo, ...data },
+        video: { ...choosenVideo, ...data, typesId: [6] },
+
       });
       setUpdatedVideo({
         ...choosenVideo,

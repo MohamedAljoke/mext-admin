@@ -1,5 +1,7 @@
 import Videos from '@/App/Pages/Videos/Videos';
+import { TypeSchemaType } from '@/App/Schema/Types.schema';
 import { VideoSchemaType } from '@/App/Schema/Video.Schema';
+import { fetchTypesList } from '@/App/Services/Type';
 import { fetchVideosList } from '@/App/Services/Videos';
 import PrivateRoute from '@/App/hook/PrivateRoute';
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
@@ -20,7 +22,8 @@ export const getServerSideProps: GetServerSideProps<PageProps> = async (
     const videos: VideoSchemaType[] = await fetchVideosList({
       token: authToken,
     });
-    return { props: { videos: videos } };
+
+    return { props: { videos: videos, } };
   } catch (e) {
     return { props: { error: 'error fetching data' } };
   }
