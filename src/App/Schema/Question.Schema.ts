@@ -39,7 +39,7 @@ export const CreateQuestionSchema = object({
 export type CreateQuestionSchemaType = TypeOf<typeof CreateQuestionSchema>;
 
 export const CreateQuestionSubmitSchema = object({
-  lectureId: array(number()),
+  lectureId: array(number()).optional(),
   questionText: string(),
   alternatives: array(
     object({

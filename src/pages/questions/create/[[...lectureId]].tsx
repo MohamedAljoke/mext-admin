@@ -77,7 +77,7 @@ export default function CreatePage() {
         }
       })
       const submitData: CreateQuestionSchemaSubmitType = {
-        lectureId: [lectureId],
+        ...(lectureId ? { lectureId: [lectureId] } : {}),
         questionText: data.questionText,
         alternatives: answers
       }

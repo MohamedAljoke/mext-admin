@@ -78,7 +78,7 @@ export default function Questions({
         <h1 className="text-2xl font-semibold text-gray-900">Questions</h1>
         {
           canCreate ?
-            <Link href={`/questions/create/${lectureId}`}>
+            <Link href={`/questions/create/${lectureId ? lectureId : ''}`}>
               <CustomButton isSubmit={false}>Add question</CustomButton>
             </Link> : null
         }

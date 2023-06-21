@@ -11,7 +11,6 @@ export default function Users({ users }: { users: UserSchemaType[] | undefined }
   const [usersList, setUsersList] = useState<UserSchemaType[]>();
   const [choosenUser, setChoosenUser] = useState<UserSchemaType>();
   const [updatedUser, setUpdatedUser] = useState<UserSchemaType>();
-
   const openEditModal = (user: UserSchemaType) => {
     setChoosenUser(user);
     setOpenEdit(true);
