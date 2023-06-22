@@ -1,17 +1,14 @@
-import Chapters from '@/App/Pages/Chapters/Chapters';
-import Lectuers from '@/App/Pages/Lectuers/Lectuers';
 import Pdfs from '@/App/Pages/Pdfs/Pdfs';
-import { ChapterSchemaType } from '@/App/Schema/Chapter.Schema';
-import { LectuerSchemaType } from '@/App/Schema/Lectuer.Schema';
 import { PdfSchemaType } from '@/App/Schema/Pdf.Schema';
-import { fetchChaptersList } from '@/App/Services/Chapters';
-import { fetchLectuersList } from '@/App/Services/Lectuers';
+import { TypeSchemaType } from '@/App/Schema/Types.schema';
 import { fetchPdfsList } from '@/App/Services/Pdfs';
+import { fetchTypesList } from '@/App/Services/Type';
 import PrivateRoute from '@/App/hook/PrivateRoute';
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
 import React from 'react';
 
 interface PageProps {
+  types?: TypeSchemaType[];
   pdfs?: PdfSchemaType[];
   error?: string;
 }
@@ -26,18 +23,22 @@ export const getServerSideProps: GetServerSideProps<PageProps> = async (
     const pdfsList: PdfSchemaType[] = await fetchPdfsList({
       token: authToken,
     });
-    return { props: { pdfs: pdfsList } };
+    const typesList: TypeSchemaType[] = await fetchTypesList({
+      token: authToken,
+    });
+    return { props: { pdfs: pdfsList, types: typesList } };
   } catch (e) {
     return { props: { error: 'error fetching data' } };
   }
 };
 export default function PdfsPage({
   pdfs,
+  types,
   error,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   return (
     <PrivateRoute>
-      <Pdfs pdfs={pdfs} />
+      <Pdfs pdfs={pdfs} types={types} />
     </PrivateRoute>
   );
 }

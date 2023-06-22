@@ -1,8 +1,13 @@
 import axios from 'axios';
 import { API } from './base/axios';
-import { CreatePdfSchemaType, PdfSchemaType } from '../Schema/Pdf.Schema';
+import {
+  CreatePdfSchemaType,
+  EditPdfSchemaSubmitType,
+  PdfSchemaType,
+} from '../Schema/Pdf.Schema';
 import { deleteRequest, post } from './base';
 import put from './base/put';
+import { EditVideoSchemaSubmitType } from '../Schema/Video.Schema';
 
 export const fetchPdfsList = async ({
   token,
@@ -29,13 +34,17 @@ export const createPdf = async (pdf: CreatePdfSchemaType) => {
 export const updatePdf = async ({
   pdf,
 }: {
-  pdf: PdfSchemaType;
-}): Promise<PdfSchemaType> => {
+  pdf: EditPdfSchemaSubmitType;
+}): Promise<EditPdfSchemaSubmitType> => {
   const response = await put({
     url: `/pdfs/${pdf.id}`,
-    body: { pdfName: pdf.pdf_name, pdfUrl: pdf.pdf_url },
+    body: {
+      pdfName: pdf.pdf_name,
+      pdfUrl: pdf.pdf_url,
+      ...(pdf.typesId ? { typesId: pdf.typesId } : { typesId: [] }),
+    },
   });
-  return response as PdfSchemaType;
+  return response as EditPdfSchemaSubmitType;
 };
 
 export const deletePdf = async (pdfId: number) => {

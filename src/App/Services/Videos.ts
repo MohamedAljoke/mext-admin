@@ -40,7 +40,7 @@ export const updateVideo = async ({
     body: {
       videoName: video.video_name,
       videoUrl: video.video_url,
-      ...(video.typesId ? { typesId: video.typesId } : {}),
+      ...(video.typesId ? { typesId: video.typesId } : { typesId: [] }),
     },
   });
   return response as EditVideoSchemaSubmitType;
