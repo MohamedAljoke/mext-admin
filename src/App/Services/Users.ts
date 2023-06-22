@@ -1,7 +1,6 @@
 import axios from 'axios';
 import { API } from './base/axios';
 import { UserSchemaType } from '../Schema/Users.Schema';
-import { post } from './base';
 import put from './base/put';
 
 export const fetchUsersList = async ({

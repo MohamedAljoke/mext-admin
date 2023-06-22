@@ -1,6 +1,9 @@
 import Signin from '@/App/Pages/Signin/Signin';
+import PublicRoute from '@/App/hook/PublicRoute';
 import React from 'react';
 
 export default function SignInPage() {
-  return <Signin />;
+  return <PublicRoute>
+    <Signin />
+  </PublicRoute>
 }

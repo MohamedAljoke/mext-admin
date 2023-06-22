@@ -17,6 +17,7 @@ import { IconType } from 'react-icons/lib';
 import { useRouter } from 'next/router';
 import CustomButton from '@/App/Shared/common/Button/Button';
 import { FiType } from 'react-icons/fi';
+import { UserAuthType } from '@/App/context/AuthContext';
 
 type NavigationType = {
   name: string;
@@ -90,7 +91,7 @@ const navigation: NavigationType[] = [
 
 interface Props {
   children: JSX.Element;
-  user: string;
+  user: UserAuthType;
 }
 
 export default function Navigation({ user, children }: Props) {
@@ -99,7 +100,6 @@ export default function Navigation({ user, children }: Props) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [currentNavigationTab, setCurrentNavigationTab] =
     useState<NavigationType | null>(navigation[0]);
-
   useEffect(() => {
     const path = router.pathname;
     const choosenTab = navigation.find(
@@ -249,7 +249,7 @@ export default function Navigation({ user, children }: Props) {
           </button>
           <div className="flex items-center">
             {/* Profile dropdown */}
-            <Header user={user} setSidebarOpen={setSidebarOpen} />
+            <Header user={user.name} setSidebarOpen={setSidebarOpen} />
           </div>
         </div>
 

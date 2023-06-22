@@ -1,6 +1,6 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm, SubmitHandler } from 'react-hook-form';
-import React from 'react';
+import React, { useContext } from 'react';
 import { HiOutlineMail } from 'react-icons/hi';
 import { AiOutlineLock } from 'react-icons/ai';
 import { useRouter } from 'next/router';
@@ -12,8 +12,10 @@ import { LoginSchema, LoginSchemaType } from '@/App/Schema/Auth.Schema';
 import { login } from '@/App/Services/Auth';
 import { saveToken } from '@/App/Utils/tokens';
 import cookie from 'cookie';
+import { AuthContext } from '@/App/context/AuthContext';
 
 export default function Signin() {
+  const { user, isLoading, setUser } = useContext(AuthContext)
   const router = useRouter();
   const {
     register,
@@ -31,6 +33,7 @@ export default function Signin() {
           maxAge: 30 * 24 * 60 * 60, // 30 days
           path: '/',
         };
+        setUser({ email: response.email, name: response.name })
         const cookieValue = cookie.serialize(
           'auth-token',
           response.token,

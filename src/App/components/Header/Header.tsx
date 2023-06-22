@@ -1,4 +1,4 @@
-import React, { Fragment, SetStateAction } from 'react';
+import React, { Fragment, SetStateAction, useContext } from 'react';
 import { Menu, Transition } from '@headlessui/react';
 import { FiChevronDown } from 'react-icons/fi';
 import { HeaderDiv, menuButton, menuItems } from './styles';
@@ -7,6 +7,7 @@ import { MdOutlineLogout } from 'react-icons/md';
 import { popSucess } from '../PopUp/popSuccess';
 import { logout } from '@/App/Services/Auth';
 import { HiOutlineMail } from 'react-icons/hi';
+import { AuthContext } from '@/App/context/AuthContext';
 
 function classNames(...classes: any) {
   return classes.filter(Boolean).join(' ');
@@ -19,8 +20,10 @@ export default function Header({
   user: string;
   setSidebarOpen: (value: SetStateAction<boolean>) => void;
 }) {
+  const { setUser } = useContext(AuthContext)
   const handleLogout = () => {
     logout();
+    setUser(null)
     popSucess('logout successfully');
   };
 
