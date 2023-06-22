@@ -1,4 +1,5 @@
 import { EditSubjectSchemaType } from '@/App/Schema/Subject.Schema';
+import { TypeSchemaType } from '@/App/Schema/Types.schema';
 import {
   EditVideoSchema,
   EditVideoSchemaType,
@@ -11,18 +12,47 @@ import EditElement from '@/App/components/EditElement/EditElement';
 import CustomModal from '@/App/components/Modal/Modal';
 import { popError } from '@/App/components/PopUp/popError';
 import { popSucess } from '@/App/components/PopUp/popSuccess';
+import CustomSelect, { SelectOption } from '@/App/components/Select';
 import Table from '@/App/components/Table/Table';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 import { SubmitHandler } from 'react-hook-form';
 
-export default function Videos({ videos }: { videos: VideoSchemaType[] | undefined }) {
+export default function Videos({ videos, types }: { videos: VideoSchemaType[] | undefined, types?: TypeSchemaType[]; }) {
+  const router = useRouter()
   const [openEdit, setOpenEdit] = useState(false);
   const [openDelete, setOpenDelete] = useState(false);
   const [choosenVideo, setChoosenVideo] = useState<VideoSchemaType>();
   const [videoList, setVideoList] = useState<VideoSchemaType[]>();
   const [updatedVideo, setUpdatedVideo] = useState<VideoSchemaType>();
+  const [typesOptions, setTypesOptions] = useState<SelectOption[]>([])
+  const [typesListSelected, setTypesListSelected] = useState<SelectOption[]>([])
 
+  useEffect(() => {
+    if (choosenVideo?.types?.length) {
+      const typesFormatted = choosenVideo?.types?.map(type => {
+        return {
+          label: type.type_name,
+          value: type.id
+        }
+      })
+      setTypesListSelected(typesFormatted)
+    } else {
+      setTypesListSelected([])
+    }
+  }, [choosenVideo])
+  useEffect(() => {
+    if (types?.length) {
+      const typesFormatted = types?.map(type => {
+        return {
+          label: type.type_name,
+          value: type.id
+        }
+      })
+      setTypesOptions(typesFormatted)
+    }
+  }, [types])
   useEffect(() => {
     if (updatedVideo && videos) {
       const updatedVideos = videoList?.map((video) => {
@@ -63,6 +93,7 @@ export default function Videos({ videos }: { videos: VideoSchemaType[] | undefin
   };
   const closeEditModal = () => {
     setOpenEdit(false);
+    setTypesListSelected([])
   };
   //edit
   const onSubmit: SubmitHandler<EditVideoSchemaType> = async (data) => {
@@ -70,8 +101,11 @@ export default function Videos({ videos }: { videos: VideoSchemaType[] | undefin
       throw Error('no subject');
     }
     try {
+      const typesIds = typesListSelected.map(type => {
+        return type.value as number
+      })
       const response = await updateVideo({
-        video: { ...choosenVideo, ...data, typesId: [6] },
+        video: { ...choosenVideo, ...data, typesId: typesIds },
 
       });
       setUpdatedVideo({
@@ -80,7 +114,7 @@ export default function Videos({ videos }: { videos: VideoSchemaType[] | undefin
         video_url: response.video_url,
       });
       popSucess('Video Updated');
-
+      router.replace(router.asPath);
       closeEditModal();
     } catch (e) {
       console.log(e);
@@ -120,6 +154,18 @@ export default function Videos({ videos }: { videos: VideoSchemaType[] | undefin
           choosenElement={choosenVideo}
           closeModal={closeEditModal}
           itemSchema={EditVideoSchema}
+          children={<div className='mt-3'>
+            <CustomSelect isMulti={true} options={typesOptions}
+              values={typesListSelected}
+              handleChange={(newValue) => {
+                setTypesListSelected(prev => {
+                  return [
+                    ...newValue
+                  ]
+                })
+              }}
+            />
+          </div>}
         />
       </CustomModal>
       <CustomModal isOpen={openDelete} closeModal={closeDeleteModal}>

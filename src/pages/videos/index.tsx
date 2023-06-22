@@ -8,6 +8,7 @@ import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
 import React from 'react';
 
 interface PageProps {
+  types?: TypeSchemaType[];
   videos?: VideoSchemaType[];
   error?: string;
 }
@@ -19,11 +20,14 @@ export const getServerSideProps: GetServerSideProps<PageProps> = async (
   const cookies = req.cookies;
   const authToken = cookies['auth-token'];
   try {
+    const typesList: TypeSchemaType[] = await fetchTypesList({
+      token: authToken,
+    });
     const videos: VideoSchemaType[] = await fetchVideosList({
       token: authToken,
     });
 
-    return { props: { videos: videos, } };
+    return { props: { videos: videos, types: typesList } };
   } catch (e) {
     return { props: { error: 'error fetching data' } };
   }
@@ -31,11 +35,12 @@ export const getServerSideProps: GetServerSideProps<PageProps> = async (
 
 export default function VideosPage({
   videos,
+  types,
   error,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   return (
     <PrivateRoute>
-      <Videos videos={videos} />
+      <Videos videos={videos} types={types} />
     </PrivateRoute>
   );
 }

@@ -19,6 +19,7 @@ interface IUpdateProps<T extends FieldValues, P extends ZodType> {
   closeModal: () => void;
   itemSchema: P;
   onSubmit: SubmitHandler<T>;
+  children?: JSX.Element
 }
 
 export default function EditElement<T extends FieldValues, P extends ZodType>({
@@ -27,6 +28,7 @@ export default function EditElement<T extends FieldValues, P extends ZodType>({
   itemSchema,
   onSubmit,
   items,
+  children
 }: IUpdateProps<T, P>) {
   const {
     register,
@@ -63,6 +65,7 @@ export default function EditElement<T extends FieldValues, P extends ZodType>({
             </div>
           );
         })}
+        {children}
         <div className="flex justify-around mt-8 ">
           <CustomButton
             onClick={closeModal}

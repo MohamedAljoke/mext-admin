@@ -1,4 +1,5 @@
 import { object, number, string, TypeOf, date, array } from 'zod';
+import { TypeSchema } from './Types.schema';
 
 export const VideoSchema = object({
   id: number(),
@@ -6,6 +7,7 @@ export const VideoSchema = object({
   video_url: string(),
   created_at: date(),
   updated_at: date(),
+  types: array(TypeSchema).optional(),
 });
 
 export type VideoSchemaType = TypeOf<typeof VideoSchema>;
