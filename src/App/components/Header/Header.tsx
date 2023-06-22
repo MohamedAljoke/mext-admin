@@ -25,6 +25,7 @@ export default function Header({
     logout();
     setUser(null)
     popSucess('logout successfully');
+    localStorage.clear();
   };
 
   return (
