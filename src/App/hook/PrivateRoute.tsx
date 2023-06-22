@@ -13,7 +13,7 @@ const PrivateRoute: React.FC<Props> = ({ children }) => {
     if (!user && !isLoading) {
       router.push('/signin')
     }
-  }, [user])
+  }, [user, isLoading])
   return isLoading ? (
     <div className="flex items-center justify-center h-screen">
       <Spinner />

@@ -12,7 +12,7 @@ const PublicRoute: React.FC<Props> = ({ children }) => {
     if (user && !isLoading) {
       router.push('/users')
     }
-  }, [user])
+  }, [user, isLoading])
   return isLoading ? (
     <div className="flex items-center justify-center h-screen">
       <Spinner />
