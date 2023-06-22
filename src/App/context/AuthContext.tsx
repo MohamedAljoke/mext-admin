@@ -31,9 +31,8 @@ export function AuthProvider({ children }: { children: JSX.Element }) {
   };
   useEffect(() => {
     const { 'auth-token': token } = parseCookies()
-
+    setIsLoading(true);
     if (token) {
-      setIsLoading(true);
       refreshToken().then(response => {
         if (response?.email && response.name) {
           setUser({ name: response.name, email: response.email });
@@ -49,6 +48,8 @@ export function AuthProvider({ children }: { children: JSX.Element }) {
       }).finally(() => {
         setIsLoading(false);
       })
+    } else {
+      setIsLoading(false)
     }
   }, [])
   return (
