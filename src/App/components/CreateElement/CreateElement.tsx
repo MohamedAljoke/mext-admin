@@ -24,7 +24,6 @@ export default function CreateElement<
   } = useForm<T>({
     resolver: zodResolver(itemSchema),
   });
-  console.log(errors);
   return (
     <div className="mt-8 ml-2 flow-root">
       <div className="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">

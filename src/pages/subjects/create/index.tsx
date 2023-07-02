@@ -14,7 +14,6 @@ import { SubmitHandler } from 'react-hook-form';
 export default function CreatePage() {
   const router = useRouter();
   const onSubmit: SubmitHandler<CreateSubjectSchemaType> = async (data) => {
-    console.log(data)
     try {
       await createSubject(data);
       popSucess('Subject created');
