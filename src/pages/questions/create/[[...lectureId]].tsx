@@ -131,7 +131,7 @@ export default function CreatePage({
       }
       await createQuestion(submitData);
       popSucess('Question created');
-      // router.push('/questions');
+      router.push('/questions');
     } catch (e) {
       popError('Error creating subject');
     }
