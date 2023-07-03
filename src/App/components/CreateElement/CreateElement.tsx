@@ -1,7 +1,7 @@
 import CustomButton from '@/App/Shared/common/Button/Button';
 import CustomInput from '@/App/Shared/common/Input/Input';
 import { zodResolver } from '@hookform/resolvers/zod';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
 import { ZodType } from 'zod';
 
@@ -9,6 +9,8 @@ interface ICreateProps<T extends FieldValues, P extends ZodType> {
   itemType: any[];
   itemSchema: P;
   onSubmit: SubmitHandler<T>;
+  mathRef?: React.MutableRefObject<any>
+  setQuestionTextState?: React.Dispatch<React.SetStateAction<string>>
   children?: JSX.Element
 }
 
@@ -16,14 +18,23 @@ export default function CreateElement<
   T extends FieldValues,
   P extends ZodType,
 
->({ itemType, itemSchema, onSubmit, children }: ICreateProps<T, P>) {
+>({ itemType, itemSchema, onSubmit, mathRef, setQuestionTextState, children, }: ICreateProps<T, P>) {
   const {
     register,
     handleSubmit,
+    watch,
     formState: { errors },
   } = useForm<T>({
     resolver: zodResolver(itemSchema),
   });
+  //@ts-ignore
+  const questionText = watch('questionText')
+
+  useEffect(() => {
+    if (setQuestionTextState !== undefined) {
+      setQuestionTextState(`${questionText}`)
+    }
+  }, [questionText])
   return (
     <div className="mt-8 ml-2 flow-root">
       <div className="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">

@@ -5,7 +5,7 @@ import { popError } from '@/App/components/PopUp/popError';
 import { popSucess } from '@/App/components/PopUp/popSuccess';
 import PrivateRoute from '@/App/hook/PrivateRoute';
 import { useRouter } from 'next/router';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { SubmitHandler } from 'react-hook-form';
 import CustomButton from '@/App/Shared/common/Button/Button';
 import { HiOutlineTrash } from 'react-icons/hi';
@@ -14,6 +14,9 @@ import { TypeSchemaType } from '@/App/Schema/Types.schema';
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
 import { fetchTypesList } from '@/App/Services/Type';
 import CustomSelect, { SelectOption } from '@/App/components/Select';
+import MathJax from '@/App/hook/mathJsx';
+import CustomModal from '@/App/components/Modal/Modal';
+import ModalText from './ModalText';
 
 
 interface PageProps {
@@ -39,6 +42,8 @@ export default function CreatePage({
   types,
   error,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
+  const [showLatex, setShowLatex] = useState(false)
+  const [questionTextState, setQuestionTextState] = useState('')
   const router = useRouter();
   const lectureId: number = Number(router.query.lectureId);
   const [alternatives, setAlternatives] = useState<{ id: string, text: string, isCorrect: boolean }[]>(
@@ -126,15 +131,24 @@ export default function CreatePage({
       }
       await createQuestion(submitData);
       popSucess('Question created');
-      router.push('/questions');
+      // router.push('/questions');
     } catch (e) {
       popError('Error creating subject');
     }
   };
+
   return (
     <PrivateRoute>
       <>
+        <CustomModal isOpen={showLatex} closeModal={() => setShowLatex(false)}>
+          <>
+            {showLatex &&
+              <ModalText questionTextState={questionTextState} />
+            }
+          </>
+        </CustomModal>
         <CreateElement<CreateQuestionSchemaType, typeof CreateQuestionSchema>
+          setQuestionTextState={setQuestionTextState}
           itemType={[
             { label: 'Question', name: 'questionText', placeholder: 'Question Text' },
           ]}
@@ -181,13 +195,17 @@ export default function CreatePage({
                 })
               }
             </div>
-            <CustomButton customCss="w-[100%] mt-8 ml-auto bg-[#003370]" onClick={addAlternative} >
-              Add alternative
-            </CustomButton>
+            <div className='flex gap-5'>
+              <CustomButton customCss="w-[50%] mt-8 ml-auto bg-[#003370]" onClick={addAlternative} >
+                Add alternative
+              </CustomButton>
+              <CustomButton customCss="w-[50%] mt-8 ml-auto bg-[#003370]" onClick={() => setShowLatex(true)} >
+                show question text
+              </CustomButton>
+            </div>
 
           </>}
         />
-
       </>
     </PrivateRoute>
   );

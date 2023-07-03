@@ -44,6 +44,7 @@ export function AuthProvider({ children }: { children: JSX.Element }) {
           maxAge: 60 * 60 * 24 * 7, //7days
         })
       }).catch((e) => {
+        setIsLoading(false);
         setUser(null)
       }).finally(() => {
         setIsLoading(false);
