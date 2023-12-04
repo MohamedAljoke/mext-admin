@@ -1,10 +1,6 @@
 import Head from 'next/head';
-import Image from 'next/image';
-import { Inter } from 'next/font/google';
 import PrivateRoute from '@/App/hook/PrivateRoute';
-import Navigation from '@/App/components/Navigation/Navigation';
 
-const inter = Inter({ subsets: ['latin'] });
 
 export default function Home() {
   return (
